@@ -2,8 +2,8 @@ from flask import request, jsonify
 from config import app
 from models import User, Book , UserHistory
 from bson import ObjectId
-
-
+from recommendation.collaborative import get_collaborative_recommendations
+from recommendation.content_based import get_content_based_recommend
 
 
 # User Routes
@@ -272,6 +272,25 @@ def delete_interaction(user_id, book_id):
     return jsonify({"message": "Interaction deleted!"}), 200
 
 
+
+
+# Collaborative filtering route
+@app.route("/recommend/collaborative/<string:user_id>", methods=["GET"])
+def collaborative_recommend(user_id):
+    try:
+        recommendations = get_collaborative_recommendations(user_id)
+        return jsonify({"recommended_books": recommendations}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+# Content-based filtering route
+@app.route("/recommend/content/<string:user_id>", methods=["GET"])
+def content_recommend(user_id):
+    try:
+        recommendations = get_content_based_recommend(user_id)
+        return jsonify({"recommended_books": recommendations}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 
 
