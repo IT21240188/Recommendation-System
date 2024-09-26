@@ -1,6 +1,7 @@
 .bodyDiv{
-    padding: 2% 2%;
-    background-image: linear-gradient(15deg, #1f4037, #99f2c8);
+    padding: 2% 10%;
+    min-height: 700px;
+    background-image: linear-gradient(15deg, #baf6f4, #beffcb);
 }
 
 .header{
@@ -8,4 +9,11 @@
     padding-bottom: 2%;
     font-weight: bold;
     color: white;
+    text-align: center;
+}
+
+.rows{
+    padding-left: 1%;
+    padding-bottom: 5%;
+    padding-right: 5%;
 }
