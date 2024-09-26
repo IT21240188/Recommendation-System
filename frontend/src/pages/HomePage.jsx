@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import NavBar from '../components/NavBar.jsx'
 
 const HomePage = () => {
   const [users, setUsers] = useState([]);
@@ -18,7 +19,7 @@ const HomePage = () => {
     }
   };
   return (<div>
-
+      <NavBar/>
   </div>
   );
 };

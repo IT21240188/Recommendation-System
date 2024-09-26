@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -36,12 +37,15 @@ const EmptyMenuBar = () => {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position="sticky" style={{backgroundColor:'white'}}>
+        <AppBar position="sticky" style={{ backgroundColor: 'white' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
 
-                    <div style={{ width: '16%', height:'76px' }}><img src="/bookStoreLogo.png" width="100%" height="100%" /></div>
-
+                    <div style={{ width: '16%', height: '76px' }}>
+                        <Link to='/'>
+                            <img src="/bookStoreLogo.png" width="100%" height="100%" />
+                        </Link>
+                    </div>
 
                     <div style={{ marginLeft: '75%' }}>
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} >
@@ -75,7 +79,7 @@ const EmptyMenuBar = () => {
                             >
                                 {pages.map((page) => (
                                     <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                       <a >{page}</a> 
+                                        <a >{page}</a>
                                     </MenuItem>
                                 ))}
                             </Menu>

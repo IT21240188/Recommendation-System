@@ -14,6 +14,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -69,9 +70,10 @@ const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <div style={{ width: '16%', height: '76px' }}>
-            <img src="/src/assets/bookStoreLogo.png" width="100%" height="100%" />
+            <Link to='/'>
+              <img src="/bookStoreLogo.png" width="100%" height="100%" />
+            </Link>
           </div>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -116,11 +118,7 @@ const NavBar = () => {
               }}
             >
               <MenuItem style={{ margin: '0 5%' }}>
-                <img
-                  src={'/src/assets/images/feedIco.png'}
-                  alt="Favorite"
-                  width={30}
-                />
+                <h4>Home</h4>
               </MenuItem>
             </a>
             <a
@@ -132,63 +130,10 @@ const NavBar = () => {
               }}
             >
               <MenuItem style={{ margin: '0 5%' }}>
-                <img
-                  src={'/src/assets/images/workoutPlanIco.png'}
-                  alt="Favorite"
-                  width={30}
-                />
+                <p style={{margin:'4px 0px 0px 0px'}}>For You</p>
               </MenuItem>
             </a>
-            <a
-              href="/HomeMealPlans"
-              style={{
-                textDecoration: 'none',
-                fontWeight: 'bolder',
-                fontSize: 'larger',
-              }}
-            >
-              {' '}
-              <MenuItem style={{ margin: '0 5%' }}>
-                <img
-                  src={'/src/assets/images/mealPlanIco.png'}
-                  alt="Favorite"
-                  width={30}
-                />
-              </MenuItem>
-            </a>
-            <a
-              href="/AllStatus"
-              style={{
-                textDecoration: 'none',
-                fontWeight: 'bolder',
-                fontSize: 'larger',
-              }}
-            >
-              {' '}
-              <MenuItem style={{ margin: '0 5%' }}>
-                <img
-                  src={'/src/assets/images/currentStatusIco.png'}
-                  alt="Favorite"
-                  width={30}
-                />
-              </MenuItem>
-            </a>
-            <a
-              href="/usersearch"
-              style={{
-                textDecoration: 'none',
-                fontWeight: 'bolder',
-                fontSize: 'larger',
-              }}
-            >
-              <MenuItem style={{ margin: '0 5%' }}>
-                <img
-                  src={'/src/assets/images/searchIcon.png'}
-                  alt="Favorite"
-                  width={30}
-                />
-              </MenuItem>
-            </a>
+           
           </Box>
           {userInfoString ? (
             <>
