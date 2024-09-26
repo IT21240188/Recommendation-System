@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import BooksTemplate from '../styles/BooksTemplate.module.css'
 
 const AddBooks = () => {
 
     const navigate = useNavigate();
-    
+
     // Define state for the form fields
     const [isLoading, setIsLoading] = useState(false);
     const [title, setTitle] = useState('');
@@ -50,49 +51,56 @@ const AddBooks = () => {
 
 
     return (
-        <div>
-            <h2>Add a New Book</h2>
-
-            
+        <>
+            <div className={BooksTemplate.bodyDiv}>
+                
                 <div>
-                    <label>Title:</label>
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
+                    <h2>Add a New Book</h2>
                 </div>
 
                 <div>
-                    <label>Author:</label>
-                    <input
-                        type="text"
-                        value={author}
-                        onChange={(e) => setAuthor(e.target.value)}
-                    />
-                </div>
 
-                <div>
-                    <label>Type</label>
-                    <input
-                        type="text"
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
-                    
-                    />
-                </div>
+                    <div >
+                        <label>Title:</label>
+                        <input
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </div>
 
-                <div>
-                    <label>PublishedYear:</label>
-                    <textarea
-                        value={publishedYear}
-                        onChange={(e) => setPublishedYear(e.target.value)}
-                    ></textarea>
-                </div>
+                    <div>
+                        <label>Author:</label>
+                        <input
+                            type="text"
+                            value={author}
+                            onChange={(e) => setAuthor(e.target.value)}
+                        />
+                    </div>
 
-                <button onClick={()=> handleSubmit()}>Add Book</button>
-            
-        </div>
+                    <div>
+                        <label>Type</label>
+                        <input
+                            type="text"
+                            value={type}
+                            onChange={(e) => setType(e.target.value)}
+
+                        />
+                    </div>
+
+                    <div>
+                        <label>PublishedYear:</label>
+                        <textarea
+                            value={publishedYear}
+                            onChange={(e) => setPublishedYear(e.target.value)}
+                        ></textarea>
+                    </div>
+
+                    <button onClick={() => handleSubmit()}>Add Book</button>
+
+                </div>
+            </div>
+        </>
     );
 };
 
