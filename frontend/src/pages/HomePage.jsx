@@ -17,7 +17,10 @@ const HomePage = () => {
       console.error('Error fetching contacts:', error);
     }
   };
-  return <div></div>;
+  return (<div>
+
+  </div>
+  );
 };
 
 export default HomePage;
