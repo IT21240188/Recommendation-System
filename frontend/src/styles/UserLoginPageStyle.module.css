@@ -2,12 +2,13 @@
     background:linear-gradient(to right, rgb(252, 252, 252), rgb(114 102 201 / 62%));
     position: absolute;
     width: 100%;
+    height: 100%;
 }
 .rowDiv{
-    width:85%;
-    margin: 2% auto;
+    width:80%;
+    margin: 6% auto;
     border-radius: 20px;
-    height: 610px;
+    height: 500px;
 }
 .leftDiv{
     background-color: rgb(115 103 198);

@@ -13,11 +13,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import toast from 'react-hot-toast';
 import CircularProgress from '@mui/material/CircularProgress';
-import { storage } from "../Config/FireBaseConfig.js";
 import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
 import { v4 } from "uuid";
-import { auth, provider } from '../Config/FireBaseConfig.js';
-import { signInWithPopup } from 'firebase/auth';
+
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 
 
@@ -32,8 +32,8 @@ const UserRegisterPage = () => {
     const [gender, setGender] = useState("");
     const [profileImageURL, setProfileImageURL] = useState("");
     const [userType, setUserType] = useState("User");
-    const [weight, setWeight] = useState("");
-    const [height, setHeight] = useState("");
+    const [preference1, setPreference1] = useState("");
+    const [preference2, setPreference2] = useState("");
     const [password, setPassword] = useState("");
     const [cpassword, setCPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -131,30 +131,7 @@ const UserRegisterPage = () => {
         });
     };
 
-    const googleSignUpClick = async () => {
-        signInWithPopup(auth, provider).then((data) => {
-            console.log(data.user.email);
-            const gUser = {
-                name: data.user.displayName,
-                userName: data.user.email,
-                email: data.user.email,
-                profileImageUrl: data.user.photoURL
-            };
 
-            axios.post('http://localhost:8080/api/users/googleSignUp', gUser)
-                .then(response => {
-                    toast.success("Successfully Loged in.");
-                    setIsLoading(false)
-                    const userData = JSON.stringify(response.data);
-                    localStorage.setItem("UserInfo", userData);
-                    navigate("/");
-                    
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
-        })
-    }
 
     const submitHandler = async () => {
 
@@ -183,29 +160,33 @@ const UserRegisterPage = () => {
                 profilePicURL: profileImgDownURL,
                 dob: dob,
                 gender: gender,
-                weight: weight,
-                height: height,
+                preference1: preference1,
+                preference2: preference2,
                 password: password,
-                userType: userType,
+                userType: "Admin",
             };
             console.log(user);
-            axios.post('http://localhost:8080/api/users/register', user)
-                .then(response => {
-                    toast.success("Successfully Registered.");
-                    setIsLoading(false)
-                    navigate("/login");
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    if (error.response.data == "Username already exists") {
+            try {
+                const response = await axios.post('http://127.0.0.1:5000/create_user', user);
+                toast.success("Successfully Registered.");
+                setIsLoading(false);
+                navigate("/login");
+            } catch (error) {
+                console.error("Error:", error);
+                if (error.response && error.response.data) {
+                    if (error.response.data === "Username already exists") {
                         removeFileByDownloadUrl(profileImgDownURL);
-                        toast.error("User name already exist!");
-                    }
-                    if (error.response.data == "Email already exists") {
+                        toast.error("User name already exists!");
+                    } else if (error.response.data === "Email already exists") {
                         toast.error("Email already exists!");
+                    } else {
+                        toast.error("An unknown error occurred. Please try again.");
                     }
-
-                });
+                } else {
+                    toast.error("Network error. Please check your connection.");
+                }
+                setIsLoading(false); // Ensure loading state is stopped in case of error
+            }
         }
 
 
@@ -283,7 +264,7 @@ const UserRegisterPage = () => {
                                                 {imagePreview ? (
                                                     <img src={imagePreview} alt="Preview" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
                                                 ) : (
-                                                    <img src={'/src/assets/images/user-avatars.png'} alt="Preview" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+                                                    <img src={'/user-avatars.png'} alt="Preview" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
                                                 )}
                                             </div>
                                             <input id="imageInput" type="file" onChange={handleImageChange} style={{ display: 'none' }} />
@@ -314,55 +295,63 @@ const UserRegisterPage = () => {
                                     />
                                 </Col>
                                 <Col>
-                                    <FormControl>
+                                    <Box>
+                                        <FormControl>
 
-                                        <RadioGroup
-                                            row
-                                            aria-labelledby="demo-row-radio-buttons-group-label"
-                                            name="row-radio-buttons-group"
-                                            value={gender}
-                                            onChange={(e) => setGender(e.target.value)}
-                                            required
-                                        >
-                                            <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                            <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                        </RadioGroup>
-                                    </FormControl>
+                                            <RadioGroup
+                                                row
+                                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                                name="row-radio-buttons-group"
+                                                value={gender}
+                                                onChange={(e) => setGender(e.target.value)}
+                                                required
+                                            >
+                                                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Box>
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row style={{marginTop:'15px'}}>
                                 <Col>
-                                    <FormControl variant="outlined" size='small' margin="normal" fullWidth>
-                                        <InputLabel htmlFor="outlined-adornment-password">Weight</InputLabel>
-                                        <OutlinedInput
-                                            endAdornment={
-                                                <InputAdornment position="end">
-                                                    kg
-                                                </InputAdornment>
-                                            }
-                                            label="Weight"
-                                            value={weight}
-                                            onChange={(e) => setWeight(e.target.value)}
-                                        />
-                                    </FormControl>
+                                    <Box sx={{ minWidth: 120 }}>
+                                        <FormControl fullWidth size='small'>
+                                            <InputLabel id="demo-simple-select-label">Preference 01</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={preference1}
+                                                label="Preference 01"
+                                                onChange={(e) => setPreference1(e.target.value)}
 
+                                            >
+
+                                                <MenuItem value={'horror'}>horror</MenuItem>
+                                                <MenuItem value={'Love'}>Love</MenuItem>
+                                                <MenuItem value={'Novels'}>Novels</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
                                 </Col>
-
                                 <Col>
+                                    <Box sx={{ minWidth: 120 }}>
+                                        <FormControl fullWidth size='small'>
+                                            <InputLabel id="demo-simple-select-label">Preference 02</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={preference2}
+                                                label="Preference 02"
+                                                onChange={(e) => setPreference2(e.target.value)}
+                                            >
 
-                                    <FormControl variant="outlined" size='small' margin="normal" fullWidth>
-                                        <InputLabel htmlFor="outlined-adornment-password">Height</InputLabel>
-                                        <OutlinedInput
-                                            endAdornment={
-                                                <InputAdornment position="end">
-                                                    m
-                                                </InputAdornment>
-                                            }
-                                            label="Height"
-                                            value={height}
-                                            onChange={(e) => setHeight(e.target.value)}
-                                        />
-                                    </FormControl>
+                                                <MenuItem value={'horror'}>horror</MenuItem>
+                                                <MenuItem value={'Love'}>Love</MenuItem>
+                                                <MenuItem value={'Novels'}>Novels</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
                                 </Col>
                             </Row>
                             <Row>

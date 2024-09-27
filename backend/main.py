@@ -18,10 +18,17 @@ def get_users():
 def create_user():
     first_name = request.json.get("firstName")
     last_name = request.json.get("lastName")
+    username = request.json.get("userName")
     email = request.json.get("email")
+    dob = request.json.get("dob")
+    gender = request.json.get("gender")
+    password = request.json.get("password")
+    preference1 = request.json.get("preference1")
+    preference2 = request.json.get("preference2")
+    userType = request.json.get("userType")
 
-    if not first_name or not last_name or not email:
-        return jsonify({"message": "You must include a first name, last name, and email"}), 400
+    if not first_name or not last_name or not username or not email or not password or not preference1:
+        return jsonify({"message": "You must include a first name, last name, and email and other required feilds"}), 400
 
     if User.find_one({"email": email}):
         return jsonify({"message": "User with this email already exists"}), 400
@@ -29,7 +36,13 @@ def create_user():
     new_user = {
         "firstName": first_name,
         "lastName": last_name,
-        "email": email
+        "email": email,
+        "dob": dob,
+        "gender": gender,
+        "password": password,
+        "preference1": preference1,
+        "preference2": preference2,
+        "userType": userType
     }
 
     try:
@@ -47,6 +60,23 @@ def create_user():
 
     return jsonify({"message": "User created!", "user": serializable_user}), 201
 
+@app.route("/login_user", methods=["POST"])
+def login_user():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    userType = request.json.get("userType")
+
+    if not email or not password:
+        return jsonify({"message": "You must include email and other required feilds"}), 500
+    user = User.find_one({"email": email})
+    print(user)
+    if user:
+        if user["password"] == password:
+            return jsonify(user), 200  # Return user object
+        else:
+            return jsonify({"message": "User password incorrect"}), 500
+    else:
+        return jsonify({"message": "User with this email not exists"}), 500
 
 
 @app.route("/update_user/<string:user_id>", methods=["PATCH"])
