@@ -1,4 +1,6 @@
 .bodyDiv{
+    position: absolute;
+    width: 100%;
     padding: 2% 10%;
     min-height: 700px;
     background-image: linear-gradient(15deg, #baf6f4, #beffcb);

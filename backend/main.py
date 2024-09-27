@@ -132,39 +132,73 @@ def delete_user(user_id):
 
 
 # Book Routes
+
+#get all Books
 @app.route("/books", methods=["GET"])
 def get_books():
-    books = list(Book.find({}, {"_id": 0}))  # Exclude MongoDB's _id field from the result
+    books = list(Book.find({}))  # Find all books without additional arguments
+    for book in books:
+        book.pop("_id", None)  # Remove the _id field from each book
     return jsonify({"books": books}), 200
 
-
+#insert a book
 @app.route("/create_book", methods=["POST"])
 def create_book():
+    # Get required fields from request JSON
     title = request.json.get("title")
+    description = request.json.get("description")
     author = request.json.get("author")
-    type = request.json.get("type")
-    published_year = request.json.get("publishedYear")
+    ISBN = request.json.get("ISBN")
+    genre = request.json.get("genre")
+    language = request.json.get("language")
+    published_date = request.json.get("publishedDate")
+    cover_image = request.json.get("coverImage")
 
-    if not title or not author or not type or not published_year:
+    if not title or not author or not ISBN or not genre or not language or not published_date:
         return jsonify({"message": "All book details must be provided"}), 400
 
-
+    # Create a new book entry
     new_book = {
         "title": title,
+        "description": description,
         "author": author,
-        "type": type,
-        "publishedYear": published_year
+        "ISBN": ISBN,
+        "genre": genre,
+        "language": language,
+        "publishedDate": published_date,
+        "coverImage": cover_image
     }
 
     Book.insert(new_book)
+
     serializable_book = {
         "title": new_book["title"],
         "author": new_book["author"],
-        "type": new_book["type"],
-        "publishedYear": new_book["publishedYear"]
+        "ISBN": new_book["ISBN"],
+        "genre": new_book["genre"],
+        "publishedDate": new_book["publishedDate"]
     }
 
     return jsonify({"message": "Book created!", "book": serializable_book}), 201
+
+
+@app.route("/books/<book_id>", methods=["GET"])
+def get_book(book_id):
+    # Attempt to find the book by ID
+    try:
+        book = Book.find_one({"_id": ObjectId(book_id)})  # Query by ObjectId
+    except Exception as e:
+        return jsonify({"error": "Invalid ID format"}), 400  # Handle invalid ObjectId format
+
+    if book is None:
+        return jsonify({"message": "Book not found"}), 404  # Return 404 if the book doesn't exist
+
+    # Convert the ObjectId to a string before returning
+    book["_id"] = str(book["_id"])  # Convert ObjectId to string
+
+    # Return the book as a JSON object
+    return jsonify(book), 200  # Return the book data as JSON
+
 
 
 @app.route("/update_book/<string:book_id>", methods=["PATCH"])

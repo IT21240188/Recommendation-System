@@ -6,6 +6,8 @@ import AddBooks from './pages/AddBooks';
 import { Toaster } from 'react-hot-toast';
 import UserRegisterPage from './pages/UserRegisterPage';
 import UserLoginPage from './pages/UserLoginPage';
+import BookCard from './components/BookCard';
+import BookView from './pages/BookView';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
             <Route path="/register" element={<UserRegisterPage />} />
             <Route path="/login" element={<UserLoginPage />} />
             <Route path="/AddBooks" element={<AddBooks />} />
+            <Route path="/BookCard" element={<BookCard />} />
+            <Route path="/BookView" element={<BookView />} />
           </Routes>
         </Router>
       </div>
