@@ -64,14 +64,14 @@ const NavBar = () => {
 
   return (
     <AppBar
-      position="fixed"
+      position="sticky"
       style={{ backgroundColor: 'white', top: 0, zIndex: 1000 }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <div style={{ width: '16%', height: '76px' }}>
             <Link to='/'>
-              <img src="/bookStoreLogo.png" width="100%" height="100%" />
+              <img src="/bookStoreLogo.png" width="200px" height="100%" />
             </Link>
           </div>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -117,8 +117,8 @@ const NavBar = () => {
                 fontSize: 'larger',
               }}
             >
-              <MenuItem style={{ margin: '0 5%' }}>
-                <h4>Home</h4>
+              <MenuItem style={{ margin: '0 5%', color:'black' }}>
+                Home
               </MenuItem>
             </a>
             <a
@@ -129,8 +129,8 @@ const NavBar = () => {
                 fontSize: 'larger',
               }}
             >
-              <MenuItem style={{ margin: '0 5%' }}>
-                <p style={{margin:'4px 0px 0px 0px'}}>For You</p>
+              <MenuItem style={{ margin: '0 5%', color:'black' }}>
+                For You
               </MenuItem>
             </a>
            
@@ -177,7 +177,7 @@ const NavBar = () => {
             </>
           ) : (
             <>
-              <a href="/login">
+              <a href="/login" style={{marginRight:'1%'}}>
                 <Button>Login</Button>
               </a>
               <a href="/register">
