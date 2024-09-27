@@ -10,7 +10,7 @@ from recommendation.content_based import get_content_based_recommend
 @app.route("/users", methods=["GET"])
 def get_users():
     # Fetch all users from the MongoDB collection
-    users = list(User.find({}, {"_id": 0}))  # Exclude MongoDB's _id field from the result
+    users = list(User.find({"_id": 0}))  # Exclude MongoDB's _id field from the result
     return jsonify({"users": users}), 200
 
 
@@ -72,7 +72,12 @@ def login_user():
     print(user)
     if user:
         if user["password"] == password:
-            return jsonify(user), 200  # Return user object
+            # Convert ObjectId to string
+            user["_id"] = str(user["_id"])
+
+            # Remove sensitive data before sending user object in the response
+            user.pop("password", None)
+            return jsonify({"user":user}), 200  # Return user object
         else:
             return jsonify({"message": "User password incorrect"}), 500
     else:

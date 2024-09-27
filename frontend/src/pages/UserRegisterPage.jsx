@@ -14,11 +14,11 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import toast from 'react-hot-toast';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
+import { storage } from "../config/FireBaseConfig.js";
 import { v4 } from "uuid";
 
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
 
 
 
@@ -83,6 +83,10 @@ const UserRegisterPage = () => {
 
         return `${year}-${month}-${day}`;
     };
+    console.log(image);
+    console.log(imagePreview);
+    
+    
     const handleImageClick = () => {
         // Trigger the file input dialog when image is clicked
         document.getElementById('imageInput').click();
