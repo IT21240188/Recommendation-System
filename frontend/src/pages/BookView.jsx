@@ -16,13 +16,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
-import { storage } from "../Config/FireBaseConfig.js";
-import { v4 } from "uuid";
-import NavBar from '../components/NavBar.jsx';
 
 
-const AddBooks = () => {
+const BookView = () => {
 
     const navigate = useNavigate();
 
@@ -37,62 +33,27 @@ const AddBooks = () => {
     const [language, setLanguage] = useState('');
 
     //states for image preview
-    const [coverImage, setCoverImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
     const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-
-    console.log(coverImage);
-    
 
 
     // Function to handle file selection
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setCoverImage(file);
+            setSelectedImage(file);
             setImagePreviewUrl(URL.createObjectURL(file)); // Create a preview URL
         }
     };
 
     // Function to clear the selected image
     const handleClearImage = () => {
-        setCoverImage(null);
+        setSelectedImage(null);
         setImagePreviewUrl(null);
     };
 
-    const uploadCoverImage = async () => {
-        return new Promise((resolve, reject) => {
-            if (coverImage == null) {
-                resolve(null); // Resolve with null if no image is provided
-            } else {
-                const CovereImageRef = ref(
-                    storage,
-                    `BookCoverImage/${coverImage.name + v4()}`
-                );
-
-                uploadBytes(CovereImageRef, coverImage)
-                    .then(() => {
-                        getDownloadURL(CovereImageRef)
-                            .then((downloadURL) => {
-
-                                resolve(downloadURL);
-                            })
-                            .catch((error) => {
-                                // Error getting download URL
-                                reject(error);
-                            });
-                    })
-                    .catch((error) => {
-                        // Error uploading image
-                        reject(error);
-                    });
-            }
-        })
-    }
-
     // submit handler
     const handleSubmit = async () => {
-
-        const downUrl = await uploadCoverImage();
 
         if (title === '' || author === '' || genre === '' || publishedDate === '' || ISBN === '' || language === '' || description === '') {
             toast.error("Fill required fields");
@@ -111,7 +72,6 @@ const AddBooks = () => {
                     ISBN,
                     language,
                     description,
-                    coverImage : downUrl,
                 };
 
                 const response = await axios.post('http://127.0.0.1:5000/create_book', book);
@@ -131,9 +91,7 @@ const AddBooks = () => {
 
     return (
         <>
-        <NavBar/>
             <div className={BooksTemplate.bodyDiv}>
-            
                 <div style={{ backgroundColor: "rgb(42 75 64)", margin: '3% 8%' }}>
                     <h2 className={BooksTemplate.header} >Add New Book</h2>
                 </div>
@@ -329,4 +287,4 @@ const AddBooks = () => {
     );
 };
 
-export default AddBooks;
+export default BookView;

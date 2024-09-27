@@ -92,28 +92,41 @@ class User:
         }
     
 
+#Book Model
 class Book:
-    def __init__(self, title, author, type, published_year):
+    def __init__(self, title, description, author, ISBN, genre, language, published_date, cover_image):
         self.title = title
+        self.description = description
         self.author = author
-        self.type = type
-        self.published_year = published_year
+        self.ISBN = ISBN
+        self.genre = genre
+        self.language = language
+        self.published_date = published_date
+        self.cover_image = cover_image
 
     @classmethod
     def from_dict(cls, data):
         return cls(
             title=data.get("title"),
+            description=data.get("description"),
             author=data.get("author"),
-            type=data.get("type"),
-            published_year=data.get("publishedYear")
+            ISBN=data.get("ISBN"),
+            genre=data.get("genre"),
+            language=data.get("language"),
+            published_date=data.get("publishedDate"),
+            cover_image=data.get("coverImage")
         )
 
     def to_dict(self):
         return {
             "title": self.title,
+            "description": self.description,
             "author": self.author,
-            "type": self.type,
-            "publishedYear": self.published_year
+            "ISBN": self.ISBN,
+            "genre": self.genre,
+            "language": self.language,
+            "publishedDate": self.published_date,
+            "coverImage": self.cover_image
         }
 
     @staticmethod
@@ -134,7 +147,8 @@ class Book:
 
     @staticmethod
     def delete_one(query):
-        return books_collection.delete_one(query)  
+        return books_collection.delete_one(query)
+
 
 
 
