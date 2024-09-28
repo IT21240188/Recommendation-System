@@ -19,7 +19,7 @@ const HomePage = () => {
       genre: "Fiction",
       language: "English",
       published_date: "1960-07-11",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81OthjkJBuL.jpg"
+      cover_image: "https://m.media-amazon.com/images/I/81A-mvlo+QL._AC_UF1000,1000_QL80_.jpg"
     },
     {
       title: "1984",
@@ -29,7 +29,7 @@ const HomePage = () => {
       genre: "Dystopian",
       language: "English",
       published_date: "1949-06-08",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg"
+      cover_image: "https://m.media-amazon.com/images/I/71kxa1-0mfL._AC_UF1000,1000_QL80_.jpg"
     },
     {
       title: "Pride and Prejudice",
@@ -39,7 +39,7 @@ const HomePage = () => {
       genre: "Romance",
       language: "English",
       published_date: "1813-01-28",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81VG1Y0rPQL.jpg"
+      cover_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQglMibxwfpDJspDktgnSZEzSsm_o7QV0EBCrzNcEu5mwBwOxS02Ugvicif5H7teNthJ78&usqp=CAU"
     },
     {
       title: "The Great Gatsby",
@@ -49,7 +49,7 @@ const HomePage = () => {
       genre: "Fiction",
       language: "English",
       published_date: "1925-04-10",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg"
+      cover_image: "https://m.media-amazon.com/images/I/71FTb9X6wsL._AC_UF1000,1000_QL80_.jpg"
     },
     {
       title: "Moby Dick",
@@ -59,7 +59,7 @@ const HomePage = () => {
       genre: "Adventure",
       language: "English",
       published_date: "1851-11-14",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81PRVYzPShL.jpg"
+      cover_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW1wnrmDRKTeS4uSaLJxaHzkKijUKLymDzxA&s"
     },
     {
       title: "War and Peace",
@@ -69,7 +69,7 @@ const HomePage = () => {
       genre: "Historical Fiction",
       language: "Russian",
       published_date: "1869-01-01",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81a2+ke9cPL.jpg"
+      cover_image: "https://m.media-amazon.com/images/I/81oHM-dzefL._AC_UF1000,1000_QL80_.jpg"
     },
     {
       title: "The Catcher in the Rye",
@@ -79,7 +79,7 @@ const HomePage = () => {
       genre: "Fiction",
       language: "English",
       published_date: "1951-07-16",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/71AFx4Frh6L.jpg"
+      cover_image: "https://m.media-amazon.com/images/I/71UypkUjStL._AC_UF1000,1000_QL80_.jpg"
     },
     {
       title: "The Hobbit",
@@ -89,7 +89,7 @@ const HomePage = () => {
       genre: "Fantasy",
       language: "English",
       published_date: "1937-09-21",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg"
+      cover_image: "https://m.media-amazon.com/images/I/91b0C2YNSrL._AC_UF1000,1000_QL80_.jpg"
     },
     {
       title: "The Alchemist",
@@ -99,7 +99,7 @@ const HomePage = () => {
       genre: "Philosophy",
       language: "Portuguese",
       published_date: "1988-01-01",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/71aFt4+OTOL.jpg"
+      cover_image: "https://m.media-amazon.com/images/I/71aFt4+OTOL._AC_UF1000,1000_QL80_.jpg"
     },
     {
       title: "Harry Potter and the Sorcerer's Stone",
@@ -109,11 +109,49 @@ const HomePage = () => {
       genre: "Fantasy",
       language: "English",
       published_date: "1997-06-26",
-      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81YOuOGFCJL.jpg"
+      cover_image: "https://m.media-amazon.com/images/I/81YOuOGFCJL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      title: "The Catcher in the Rye",
+      description: "A story about a young man's struggle with growing up and alienation.",
+      author: "J.D. Salinger",
+      ISBN: "9780316769488",
+      genre: "Fiction",
+      language: "English",
+      published_date: "1951-07-16",
+      cover_image: "https://m.media-amazon.com/images/I/71UypkUjStL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      title: "The Hobbit",
+      description: "A fantasy novel about the adventure of Bilbo Baggins, a hobbit.",
+      author: "J.R.R. Tolkien",
+      ISBN: "9780547928227",
+      genre: "Fantasy",
+      language: "English",
+      published_date: "1937-09-21",
+      cover_image: "https://m.media-amazon.com/images/I/91b0C2YNSrL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      title: "The Alchemist",
+      description: "A philosophical book about a young shepherd on his journey to find treasure.",
+      author: "Paulo Coelho",
+      ISBN: "9780061122415",
+      genre: "Philosophy",
+      language: "Portuguese",
+      published_date: "1988-01-01",
+      cover_image: "https://m.media-amazon.com/images/I/71aFt4+OTOL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      title: "Harry Potter and the Sorcerer's Stone",
+      description: "The first book in the Harry Potter series about a young wizard's journey.",
+      author: "J.K. Rowling",
+      ISBN: "9780439708180",
+      genre: "Fantasy",
+      language: "English",
+      published_date: "1997-06-26",
+      cover_image: "https://m.media-amazon.com/images/I/81YOuOGFCJL._AC_UF1000,1000_QL80_.jpg"
     }
   ];
-  
-
 
   useEffect(() => {
     fetchUsers();
@@ -130,8 +168,7 @@ const HomePage = () => {
   return (
     <div>
       <NavBar />
-      <Container>
-        {bookList.length > 0 && bookList.map((book, index) => (
+      <Container style={{marginTop:'4%'}}>
           <Box
             sx={{
               display: 'flex',
@@ -144,7 +181,6 @@ const HomePage = () => {
               <BookCard book={book} key={index} />
             ))}
           </Box>
-        ))}
       </Container>
     </div>
   );
