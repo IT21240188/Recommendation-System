@@ -314,7 +314,7 @@ const AddBooks = () => {
 
                     <br />
                     <Row className={BooksTemplate.rows}>
-                        <Button style={{ background: '#2a4b40', width: '65px', margin: 'auto' }} variant="contained" size="small" onClick={handleSubmit}>
+                        <Button style={{ background: 'rgb(146 66 93)', width: '65px', margin: 'auto' }} variant="contained" size="small" onClick={handleSubmit}>
                             Add
                         </Button>
                     </Row>
