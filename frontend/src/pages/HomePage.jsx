@@ -4,6 +4,7 @@ import axios from 'axios';
 import NavBar from '../components/NavBar.jsx'
 import { Container } from 'react-bootstrap';
 import BookCard from '../components/BookCard.jsx';
+import { Box } from '@mui/material';
 
 const HomePage = () => {
   const [users, setUsers] = useState([]);
@@ -18,7 +19,7 @@ const HomePage = () => {
       genre: "Fiction",
       language: "English",
       published_date: "1960-07-11",
-      cover_image: "https://m.media-amazon.com/images/I/61mgwNiwzSL._AC_UF1000,1000_QL80_.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81OthjkJBuL.jpg"
     },
     {
       title: "1984",
@@ -28,7 +29,7 @@ const HomePage = () => {
       genre: "Dystopian",
       language: "English",
       published_date: "1949-06-08",
-      cover_image: "https://m.media-amazon.com/images/I/61mgwNiwzSL._AC_UF1000,1000_QL80_.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg"
     },
     {
       title: "Pride and Prejudice",
@@ -38,7 +39,7 @@ const HomePage = () => {
       genre: "Romance",
       language: "English",
       published_date: "1813-01-28",
-      cover_image: "https://example.com/pride-and-prejudice.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81VG1Y0rPQL.jpg"
     },
     {
       title: "The Great Gatsby",
@@ -48,7 +49,7 @@ const HomePage = () => {
       genre: "Fiction",
       language: "English",
       published_date: "1925-04-10",
-      cover_image: "https://example.com/the-great-gatsby.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg"
     },
     {
       title: "Moby Dick",
@@ -58,7 +59,7 @@ const HomePage = () => {
       genre: "Adventure",
       language: "English",
       published_date: "1851-11-14",
-      cover_image: "https://example.com/moby-dick.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81PRVYzPShL.jpg"
     },
     {
       title: "War and Peace",
@@ -68,7 +69,7 @@ const HomePage = () => {
       genre: "Historical Fiction",
       language: "Russian",
       published_date: "1869-01-01",
-      cover_image: "https://example.com/war-and-peace.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81a2+ke9cPL.jpg"
     },
     {
       title: "The Catcher in the Rye",
@@ -78,7 +79,7 @@ const HomePage = () => {
       genre: "Fiction",
       language: "English",
       published_date: "1951-07-16",
-      cover_image: "https://example.com/the-catcher-in-the-rye.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/71AFx4Frh6L.jpg"
     },
     {
       title: "The Hobbit",
@@ -88,7 +89,7 @@ const HomePage = () => {
       genre: "Fantasy",
       language: "English",
       published_date: "1937-09-21",
-      cover_image: "https://example.com/the-hobbit.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg"
     },
     {
       title: "The Alchemist",
@@ -98,7 +99,7 @@ const HomePage = () => {
       genre: "Philosophy",
       language: "Portuguese",
       published_date: "1988-01-01",
-      cover_image: "https://example.com/the-alchemist.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/71aFt4+OTOL.jpg"
     },
     {
       title: "Harry Potter and the Sorcerer's Stone",
@@ -108,9 +109,10 @@ const HomePage = () => {
       genre: "Fantasy",
       language: "English",
       published_date: "1997-06-26",
-      cover_image: "https://example.com/harry-potter-1.jpg"
+      cover_image: "https://images-na.ssl-images-amazon.com/images/I/81YOuOGFCJL.jpg"
     }
   ];
+  
 
 
   useEffect(() => {
@@ -129,8 +131,19 @@ const HomePage = () => {
     <div>
       <NavBar />
       <Container>
-        {bookList.length>0 && bookList.map((book,index)=>(
-            <BookCard book={book} key={index}/>
+        {bookList.length > 0 && bookList.map((book, index) => (
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center', // Center items horizontally
+              gap: 2, // Gap between cards
+            }}
+          >
+            {bookList.map((book, index) => (
+              <BookCard book={book} key={index} />
+            ))}
+          </Box>
         ))}
       </Container>
     </div>

@@ -7,7 +7,7 @@ const BookCard = ({ book }) => {
     return (
         <Card
             sx={{
-                maxWidth: 200,
+                maxWidth: 150,
                 maxHeight: 250,
                 position: 'relative',
                 overflow: 'hidden',
@@ -20,6 +20,7 @@ const BookCard = ({ book }) => {
         >
             <CardMedia
                 component="img"
+                width={200}
                 height={250}
                 image={book.cover_image}
                 alt={book.title}
@@ -28,6 +29,7 @@ const BookCard = ({ book }) => {
                     filter: hover ? 'brightness(50%)' : 'none', // Dims the image when hovered
                 }}
             />
+
             <CardContent
                 sx={{
                     position: 'absolute',
@@ -48,8 +50,8 @@ const BookCard = ({ book }) => {
                 <Typography gutterBottom variant="h5" component="div" align='center'>
                     {book.title}
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'white' }}>
-                    {book.author}<br />
+                <Typography variant="body2" sx={{ color: 'white' }} align='center'>
+                    {book.author}<br/><br/>
                     {book.language}
                 </Typography>
             </CardContent>
