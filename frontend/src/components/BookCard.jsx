@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const BookCard = ({ book }) => {
     const [hover, setHover] = useState(false);
-console.log(book);
 
     return (
         <Link to={`/BookView/${book.id}`}>
@@ -25,7 +24,7 @@ console.log(book);
                     component="img"
                     width={200}
                     height={250}
-                    image={book.cover_image}
+                    image={book.coverImage}
                     alt={book.title}
                     sx={{
                         transition: '0.5s',

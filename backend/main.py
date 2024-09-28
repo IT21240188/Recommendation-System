@@ -139,7 +139,7 @@ def delete_user(user_id):
 def get_books():
     books = list(Book.find({}))  # Find all books without additional arguments
     for book in books:
-        book.pop("_id", None)  # Remove the _id field from each book
+        book['id'] = str(book.pop("_id", None))  # Rename _id to bookid and convert to string
     return jsonify({"books": books}), 200
 
 #insert a book
