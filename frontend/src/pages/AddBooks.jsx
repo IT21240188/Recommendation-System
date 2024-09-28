@@ -17,7 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
-import { storage } from "../Config/FireBaseConfig.js";
+import { storage } from "../config/FireBaseConfig.js";
 import { v4 } from "uuid";
 import NavBar from '../components/NavBar.jsx';
 
