@@ -41,7 +41,7 @@ const AddBooks = () => {
     const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
     console.log(coverImage);
-    
+
 
 
     // Function to handle file selection
@@ -111,7 +111,7 @@ const AddBooks = () => {
                     ISBN,
                     language,
                     description,
-                    coverImage : downUrl,
+                    coverImage: downUrl,
                 };
 
                 const response = await axios.post('http://127.0.0.1:5000/create_book', book);
@@ -131,10 +131,10 @@ const AddBooks = () => {
 
     return (
         <>
-        <NavBar/>
+            <NavBar />
             <div className={BooksTemplate.bodyDiv}>
-            
-                <div style={{ backgroundColor: "rgb(42 75 64)", margin: '3% 8%' }}>
+
+                <div style={{ backgroundColor: "rgb(146 66 93)", margin: '3% 8%' }}>
                     <h2 className={BooksTemplate.header} >Add New Book</h2>
                 </div>
 
@@ -174,13 +174,14 @@ const AddBooks = () => {
                             </Row>
 
                             <Row className={BooksTemplate.rows}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} >
                                     <DemoContainer components={['DatePicker']}>
                                         <DatePicker
                                             label="Published date"
                                             variant="outlined"
                                             value={publishedDate}
                                             onChange={(newValue) => setPublishedDate(newValue)} />
+                                            
                                     </DemoContainer>
                                 </LocalizationProvider>
                             </Row>
@@ -221,55 +222,53 @@ const AddBooks = () => {
 
                             <Row className={BooksTemplate.rows}>
 
-                                <Box sx={{ minWidth: 120 }}>
-                                    <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Genre</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            size='small'
-                                            value={genre}
-                                            label="Genre"
-                                            onChange={(e) => setGenre(e.target.value)}
-                                        >
-                                            <MenuItem value={"Fiction"}>Fiction </MenuItem>
-                                            <MenuItem value={"Non-fiction"}>Non-fiction</MenuItem>
-                                            <MenuItem value={"Mystery/Thriller"}>Mystery/Thriller</MenuItem>
-                                            <MenuItem value={"Fantasy "}>Fantasy  </MenuItem>
-                                            <MenuItem value={"Science Fiction"}>Science Fiction </MenuItem>
-                                            <MenuItem value={"Romance "}>Romance  </MenuItem>
-                                            <MenuItem value={"Historical Fiction"}>Historical Fiction </MenuItem>
-                                            <MenuItem value={"Horror "}>Horror  </MenuItem>
-                                            <MenuItem value={"Biography/Autobiography"}>Biography/Autobiography </MenuItem>
-                                            <MenuItem value={"Self-Help"}>Self-Help </MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Box>
+                                <FormControl fullWidth size='small'>
+                                    <InputLabel id="demo-simple-select-label">Genre</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+
+                                        value={genre}
+                                        label="Genre"
+                                        onChange={(e) => setGenre(e.target.value)}
+                                    >
+                                        <MenuItem value={"Fiction"}>Fiction </MenuItem>
+                                        <MenuItem value={"Non-fiction"}>Non-fiction</MenuItem>
+                                        <MenuItem value={"Mystery/Thriller"}>Mystery/Thriller</MenuItem>
+                                        <MenuItem value={"Fantasy "}>Fantasy  </MenuItem>
+                                        <MenuItem value={"Science Fiction"}>Science Fiction </MenuItem>
+                                        <MenuItem value={"Romance "}>Romance  </MenuItem>
+                                        <MenuItem value={"Historical Fiction"}>Historical Fiction </MenuItem>
+                                        <MenuItem value={"Horror "}>Horror  </MenuItem>
+                                        <MenuItem value={"Biography/Autobiography"}>Biography/Autobiography </MenuItem>
+                                        <MenuItem value={"Self-Help"}>Self-Help </MenuItem>
+                                    </Select>
+                                </FormControl>
+
 
                             </Row>
 
                             <Row className={BooksTemplate.rows}>
 
-                                <Box sx={{ minWidth: 120 }}>
-                                    <FormControl fullWidth>
-                                        <InputLabel id="demo-simple-select-label">Language</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            value={language}
-                                            label="Language"
-                                            size='small'
-                                            onChange={(e) => setLanguage(e.target.value)}
-                                        >
-                                            <MenuItem value={"English"}>English </MenuItem>
-                                            <MenuItem value={"Sinhala"}>Sinhala</MenuItem>
-                                            <MenuItem value={"Tamil"}>Tamil</MenuItem>
-                                            <MenuItem value={"Spanish"}>Spanish</MenuItem>
-                                            <MenuItem value={"Korean"}>Korean</MenuItem>
+                                <FormControl fullWidth size='small'>
+                                    <InputLabel id="demo-simple-select-label">Language</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={language}
+                                        label="Language"
 
-                                        </Select>
-                                    </FormControl>
-                                </Box>
+                                        onChange={(e) => setLanguage(e.target.value)}
+                                    >
+                                        <MenuItem value={"English"}>English </MenuItem>
+                                        <MenuItem value={"Sinhala"}>Sinhala</MenuItem>
+                                        <MenuItem value={"Tamil"}>Tamil</MenuItem>
+                                        <MenuItem value={"Spanish"}>Spanish</MenuItem>
+                                        <MenuItem value={"Korean"}>Korean</MenuItem>
+
+                                    </Select>
+                                </FormControl>
+
 
                             </Row>
 
