@@ -2,9 +2,116 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar.jsx'
+import { Container } from 'react-bootstrap';
+import BookCard from '../components/BookCard.jsx';
 
 const HomePage = () => {
   const [users, setUsers] = useState([]);
+
+
+  const bookList = [
+    {
+      title: "To Kill a Mockingbird",
+      description: "A novel about the serious issues of rape and racial inequality.",
+      author: "Harper Lee",
+      ISBN: "9780061120084",
+      genre: "Fiction",
+      language: "English",
+      published_date: "1960-07-11",
+      cover_image: "https://m.media-amazon.com/images/I/61mgwNiwzSL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      title: "1984",
+      description: "A dystopian novel set in a totalitarian society under constant surveillance.",
+      author: "George Orwell",
+      ISBN: "9780451524935",
+      genre: "Dystopian",
+      language: "English",
+      published_date: "1949-06-08",
+      cover_image: "https://m.media-amazon.com/images/I/61mgwNiwzSL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      title: "Pride and Prejudice",
+      description: "A romantic novel that also critiques the British landed gentry.",
+      author: "Jane Austen",
+      ISBN: "9780141040349",
+      genre: "Romance",
+      language: "English",
+      published_date: "1813-01-28",
+      cover_image: "https://example.com/pride-and-prejudice.jpg"
+    },
+    {
+      title: "The Great Gatsby",
+      description: "A novel that explores themes of wealth, excess, and the American Dream.",
+      author: "F. Scott Fitzgerald",
+      ISBN: "9780743273565",
+      genre: "Fiction",
+      language: "English",
+      published_date: "1925-04-10",
+      cover_image: "https://example.com/the-great-gatsby.jpg"
+    },
+    {
+      title: "Moby Dick",
+      description: "A novel about the obsessive quest of Captain Ahab for revenge on Moby Dick.",
+      author: "Herman Melville",
+      ISBN: "9781503280786",
+      genre: "Adventure",
+      language: "English",
+      published_date: "1851-11-14",
+      cover_image: "https://example.com/moby-dick.jpg"
+    },
+    {
+      title: "War and Peace",
+      description: "A novel that intertwines themes of war, peace, love, and family.",
+      author: "Leo Tolstoy",
+      ISBN: "9780199232765",
+      genre: "Historical Fiction",
+      language: "Russian",
+      published_date: "1869-01-01",
+      cover_image: "https://example.com/war-and-peace.jpg"
+    },
+    {
+      title: "The Catcher in the Rye",
+      description: "A story about a young man's struggle with growing up and alienation.",
+      author: "J.D. Salinger",
+      ISBN: "9780316769488",
+      genre: "Fiction",
+      language: "English",
+      published_date: "1951-07-16",
+      cover_image: "https://example.com/the-catcher-in-the-rye.jpg"
+    },
+    {
+      title: "The Hobbit",
+      description: "A fantasy novel about the adventure of Bilbo Baggins, a hobbit.",
+      author: "J.R.R. Tolkien",
+      ISBN: "9780547928227",
+      genre: "Fantasy",
+      language: "English",
+      published_date: "1937-09-21",
+      cover_image: "https://example.com/the-hobbit.jpg"
+    },
+    {
+      title: "The Alchemist",
+      description: "A philosophical book about a young shepherd on his journey to find treasure.",
+      author: "Paulo Coelho",
+      ISBN: "9780061122415",
+      genre: "Philosophy",
+      language: "Portuguese",
+      published_date: "1988-01-01",
+      cover_image: "https://example.com/the-alchemist.jpg"
+    },
+    {
+      title: "Harry Potter and the Sorcerer's Stone",
+      description: "The first book in the Harry Potter series about a young wizard's journey.",
+      author: "J.K. Rowling",
+      ISBN: "9780439708180",
+      genre: "Fantasy",
+      language: "English",
+      published_date: "1997-06-26",
+      cover_image: "https://example.com/harry-potter-1.jpg"
+    }
+  ];
+
 
   useEffect(() => {
     fetchUsers();
@@ -18,9 +125,15 @@ const HomePage = () => {
       console.error('Error fetching contacts:', error);
     }
   };
-  return (<div>
-      <NavBar/>
-  </div>
+  return (
+    <div>
+      <NavBar />
+      <Container>
+        {bookList.length>0 && bookList.map((book,index)=>(
+            <BookCard book={book} key={index}/>
+        ))}
+      </Container>
+    </div>
   );
 };
 
