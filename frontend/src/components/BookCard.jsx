@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 
 
 const BookCard = (book) => {
+
+
+    
     return (
         <>
             <Card sx={{ maxWidth: 345 }}>
@@ -16,7 +19,7 @@ const BookCard = (book) => {
                     component="img"
                     width="142px"
                     height="200px"
-                    image="https://pixabay.com/photos/grasshopper-insect-sheet-macro-art-8203319/"
+                    image= {book.image}
                     alt="green iguana"
                 />
                 <CardContent>
