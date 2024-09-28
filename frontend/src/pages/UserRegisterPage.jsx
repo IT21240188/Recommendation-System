@@ -85,8 +85,8 @@ const UserRegisterPage = () => {
     };
     console.log(image);
     console.log(imagePreview);
-    
-    
+
+
     const handleImageClick = () => {
         // Trigger the file input dialog when image is clicked
         document.getElementById('imageInput').click();
@@ -161,7 +161,7 @@ const UserRegisterPage = () => {
                 lastName: lastName,
                 userName: userName,
                 email: email,
-                profilePicURL: profileImgDownURL,
+                profileImage: profileImgDownURL,
                 dob: dob,
                 gender: gender,
                 preference1: preference1,
@@ -317,7 +317,7 @@ const UserRegisterPage = () => {
                                     </Box>
                                 </Col>
                             </Row>
-                            <Row style={{marginTop:'15px'}}>
+                            <Row style={{ marginTop: '15px' }}>
                                 <Col>
                                     <Box sx={{ minWidth: 120 }}>
                                         <FormControl fullWidth size='small'>
@@ -330,10 +330,16 @@ const UserRegisterPage = () => {
                                                 onChange={(e) => setPreference1(e.target.value)}
 
                                             >
-
-                                                <MenuItem value={'horror'}>horror</MenuItem>
-                                                <MenuItem value={'Love'}>Love</MenuItem>
-                                                <MenuItem value={'Novels'}>Novels</MenuItem>
+                                                <MenuItem value={"Fiction"}>Fiction </MenuItem>
+                                                <MenuItem value={"Non-fiction"}>Non-fiction</MenuItem>
+                                                <MenuItem value={"Mystery/Thriller"}>Mystery/Thriller</MenuItem>
+                                                <MenuItem value={"Fantasy "}>Fantasy  </MenuItem>
+                                                <MenuItem value={"Science Fiction"}>Science Fiction </MenuItem>
+                                                <MenuItem value={"Romance "}>Romance  </MenuItem>
+                                                <MenuItem value={"Historical Fiction"}>Historical Fiction </MenuItem>
+                                                <MenuItem value={"Horror "}>Horror  </MenuItem>
+                                                <MenuItem value={"Biography/Autobiography"}>Biography/Autobiography </MenuItem>
+                                                <MenuItem value={"Self-Help"}>Self-Help </MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Box>
@@ -350,9 +356,16 @@ const UserRegisterPage = () => {
                                                 onChange={(e) => setPreference2(e.target.value)}
                                             >
 
-                                                <MenuItem value={'horror'}>horror</MenuItem>
-                                                <MenuItem value={'Love'}>Love</MenuItem>
-                                                <MenuItem value={'Novels'}>Novels</MenuItem>
+                                                <MenuItem value={"Fiction"}>Fiction </MenuItem>
+                                                <MenuItem value={"Non-fiction"}>Non-fiction</MenuItem>
+                                                <MenuItem value={"Mystery/Thriller"}>Mystery/Thriller</MenuItem>
+                                                <MenuItem value={"Fantasy "}>Fantasy  </MenuItem>
+                                                <MenuItem value={"Science Fiction"}>Science Fiction </MenuItem>
+                                                <MenuItem value={"Romance "}>Romance  </MenuItem>
+                                                <MenuItem value={"Historical Fiction"}>Historical Fiction </MenuItem>
+                                                <MenuItem value={"Horror "}>Horror  </MenuItem>
+                                                <MenuItem value={"Biography/Autobiography"}>Biography/Autobiography </MenuItem>
+                                                <MenuItem value={"Self-Help"}>Self-Help </MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Box>

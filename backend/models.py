@@ -6,7 +6,7 @@ books_collection = mongo_db['Book']
 user_book_interactions_collection = mongo_db['UserHistory']
 
 class User:
-    def __init__(self, first_name, last_name,username, email, dob, gender, password, preference1, preference2, userType):
+    def __init__(self, first_name, last_name,username, email, dob, gender, password, preference1, preference2, userType, profileImage):
         self.first_name = first_name
         self.last_name = last_name
         self.username = username
@@ -17,6 +17,7 @@ class User:
         self.preference1 = preference1
         self.preference2 = preference2
         self.userType = userType
+        self.profileImage = profileImage
         
 
     @classmethod
@@ -32,7 +33,8 @@ class User:
             password=data.get("password"),
             preference1=data.get("preference1"),
             preference2=data.get("preference2"),
-            userType=data.get("userType")
+            userType=data.get("userType"),
+            profileImage=data.get("profileImage")
         )
 
     def to_dict(self):
@@ -48,6 +50,7 @@ class User:
             "preference1": self.preference1,
             "preference2": self.preference2,
             "userType": self.userType,
+            "profileImage": self.profileImage,
         }
 
     @staticmethod

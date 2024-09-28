@@ -26,6 +26,7 @@ def create_user():
     preference1 = request.json.get("preference1")
     preference2 = request.json.get("preference2")
     userType = request.json.get("userType")
+    profileImage = request.json.get("profileImage")
 
     if not first_name or not last_name or not username or not email or not password or not preference1:
         return jsonify({"message": "You must include a first name, last name, and email and other required feilds"}), 400
@@ -42,7 +43,8 @@ def create_user():
         "password": password,
         "preference1": preference1,
         "preference2": preference2,
-        "userType": userType
+        "userType": userType,
+        "profileImage": profileImage,
     }
 
     try:
