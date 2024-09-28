@@ -25,7 +25,6 @@ def create_user():
     password = request.json.get("password")
     preference1 = request.json.get("preference1")
     preference2 = request.json.get("preference2")
-    userType = request.json.get("userType")
     profileImage = request.json.get("profileImage")
 
     if not first_name or not last_name or not username or not email or not password or not preference1:
@@ -43,7 +42,7 @@ def create_user():
         "password": password,
         "preference1": preference1,
         "preference2": preference2,
-        "userType": userType,
+        "userType": "User",
         "profileImage": profileImage,
     }
 

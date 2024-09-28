@@ -25,32 +25,26 @@ const NavBar = () => {
   const [user, setUser] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadData = async () => {
-    setIsLoading(true);
-    try {
-      const response1 = await axios.get(
-        `http://localhost:8080/api/users/getUserById/${storedUserInfo.id}`
-      );
-      setUser(response1.data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setIsLoading(false);
-    }
-  };
+  // const loadData = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response1 = await axios.get(
+  //       `http://localhost:8080/api/users/getUserById/${storedUserInfo.id}`
+  //     );
+  //     setUser(response1.data);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //     setIsLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    loadData();
-  }, []);
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -74,39 +68,10 @@ const NavBar = () => {
               <img src="/bookStoreLogo.png" width="200px" height="100%" />
             </Link>
           </div>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            ></Menu>
-          </Box>
+          
 
           <Box
-            sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}
+            sx={{ flexGrow: 0, display: { md: 'flex' } }}
             margin={'auto'}
           >
             <a
@@ -137,10 +102,10 @@ const NavBar = () => {
           </Box>
           {userInfoString ? (
             <>
-              <Box sx={{ flexGrow: 0 }}>
+              <Box sx={{ flexGrow: 0, minWidth:"200px", textAlign:'center' }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src={user.profilePicURL} />
+                    <Avatar alt="Remy Sharp" src={storedUserInfo.user.profileImage} />
                   </IconButton>
                 </Tooltip>
                 <Menu
