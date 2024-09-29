@@ -5,15 +5,11 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Button } from 'react-bootstrap';
-import { Row, Col } from 'react-bootstrap';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const NavBar = () => {
@@ -68,7 +64,6 @@ const NavBar = () => {
               <img src="/bookStoreLogo.png" width="200px" height="100%" />
             </Link>
           </div>
-          
 
           <Box
             sx={{ flexGrow: 0, display: { md: 'flex' } }}
@@ -82,7 +77,7 @@ const NavBar = () => {
                 fontSize: 'larger',
               }}
             >
-              <MenuItem style={{ margin: '0 5%', color:'black' }}>
+              <MenuItem style={{ margin: '0 5%', color: 'black' }}>
                 Home
               </MenuItem>
             </a>
@@ -94,15 +89,15 @@ const NavBar = () => {
                 fontSize: 'larger',
               }}
             >
-              <MenuItem style={{ margin: '0 5%', color:'black' }}>
+              <MenuItem style={{ margin: '0 5%', color: 'black' }}>
                 For You
               </MenuItem>
             </a>
-           
+
           </Box>
           {userInfoString ? (
             <>
-              <Box sx={{ flexGrow: 0, minWidth:"200px", textAlign:'center' }}>
+              <Box sx={{ flexGrow: 0, minWidth: "200px", textAlign: 'center' }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt="Remy Sharp" src={storedUserInfo.user.profileImage} />
@@ -142,7 +137,7 @@ const NavBar = () => {
             </>
           ) : (
             <>
-              <a href="/login" style={{marginRight:'1%'}}>
+              <a href="/login" style={{ marginRight: '1%' }}>
                 <Button>Login</Button>
               </a>
               <a href="/register">

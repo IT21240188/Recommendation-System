@@ -4,6 +4,9 @@ from models import User, Book , UserHistory
 from bson import ObjectId
 from recommendation.collaborative import get_collaborative_recommendations
 from recommendation.content_based import get_content_based_recommend
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 # User Routes
@@ -360,6 +363,77 @@ def content_recommend(user_id):
         recommendations = get_content_based_recommend(user_id)
         return jsonify({"recommended_books": recommendations}), 200
     except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    
+
+
+# book filtering route
+@app.route("/recommend/contentFirstUser/<string:user_id>", methods=["GET"])
+def book_recommend_in_feed(user_id):
+    try:
+        # Convert user_id to ObjectId
+        user_id = ObjectId(user_id)
+    except:
+        return jsonify({"message": "Invalid user ID format"}), 400
+
+    try:
+        interactions = UserHistory.find({"userId": user_id})
+
+        if len(interactions) > 0:
+            # If user has interaction history, use collaborative filtering
+            recommendations = get_collaborative_recommendations(user_id)
+            return jsonify({"recommended_books": recommendations}), 200
+        else:
+            # If no interaction history, use content-based filtering
+            books = list(Book.find({}))
+
+            user = User.find_one({"_id": user_id})
+            
+            # Convert the book list to a DataFrame
+            book_df = pd.DataFrame(books)
+
+            # Combine user preferences into a single string
+            userPreferences = user['preference1'] + ' ' + user['preference2']
+            print(userPreferences)
+
+            # Create a list of documents (book genres + user preferences)
+            documents = list(book_df['genre']) + [userPreferences]
+            print(documents)
+
+            # Initialize the TF-IDF vectorizer
+            tfidf_vectorizer = TfidfVectorizer()
+
+            # Fit and transform the documents into TF-IDF vectors
+            tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
+
+            # Compute cosine similarity between the user's profile and the books
+            cosine_sim = cosine_similarity(tfidf_matrix[-1], tfidf_matrix[:-1])
+
+            # Convert similarity scores to a flat list
+            similarity_scores = cosine_sim.flatten()
+
+            # Add similarity scores to the DataFrame
+            book_df['similarity_score'] = similarity_scores
+
+            # Filter out books with a similarity score of 0 or less
+            book_df = book_df[book_df['similarity_score'] > 0]
+
+            # Sort remaining books by similarity score in descending order
+            recommended_books = book_df.sort_values(by='similarity_score', ascending=False)
+
+            # Convert ObjectId fields to strings before returning
+            recommended_books['_id'] = recommended_books['_id'].apply(str)
+            recommended_books.rename(columns={'_id': 'id'}, inplace=True)
+
+            # Convert the DataFrame to a dictionary
+            recommended_books_dict = recommended_books.to_dict(orient='records')
+            print(recommended_books_dict)
+
+            return jsonify({"recommended_books": recommended_books_dict}), 200
+
+    except Exception as e:
+        # Log the error to the console and return a 400 error response
+        print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 400
 
 
