@@ -10,19 +10,78 @@ import NavBar from '../components/NavBar';
 import CircularProgress from '@mui/material/CircularProgress';
 import BookCard from '../components/BookCard';
 import { Box } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const BookView = () => {
 
     const navigate = useNavigate();
+    const userInfoString = localStorage.getItem('UserInfo');
+    const storedUserInfo = JSON.parse(userInfoString);
 
     const BookID = useParams('id');
-console.log(BookID);
+    console.log(BookID);
 
     //states for the form fields
     const [isLoading, setIsLoading] = useState(false);
     const [book, setBook] = useState('');
     const [bookList, setBookList] = useState('');
+
+    //states for the rate dialog box
+    const [open, setOpen] = React.useState(false);
+
+    //ratings
+    const [value, setValue] = React.useState(2);
+
+
+
+    //rating Dialog
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const RatingsSubmitHandler = async () => {
+
+        if (value === '') {
+            toast.error("Fill required fields");
+
+        } else {
+
+            setIsLoading(true);
+
+            try {
+
+                const rating = {
+                    value,
+                };
+
+                const response = await axios.post('http://127.0.0.1:5000/create_book', book);
+
+                console.log("Book Added successfully!", response);
+                toast.success("Book Added successfully!");
+                navigate('/');
+            } catch (error) {
+                console.error("Error:", error);
+                toast.error("Error adding the book. Please try again.");
+                setIsLoading(false);
+            }
+        }
+    };
+
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -51,6 +110,7 @@ console.log(BookID);
     }
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchData();
         fetchList();
     }, [BookID])
@@ -62,7 +122,7 @@ console.log(BookID);
 
             <div className={BooksTemplate.bodyDiv}>
                 {isLoading ? (<>
-                    <div>
+                    <div style={{ margin: '20% 0% 0% 50%' }}>
                         <CircularProgress />
                     </div>
                 </>) : (
@@ -83,9 +143,51 @@ console.log(BookID);
                                     </Row>
                                     <Row >
                                         <div style={{ maxWidth: '248px' }}>
-                                            <Button style={{ background: 'rgb(100 163 103)', marginTop: '10px', width: '100%' }} variant="contained" size="small">
-                                                Buy
-                                            </Button>
+
+
+                                            <React.Fragment>
+                                                <Button
+                                                    style={{ background: 'rgb(100 163 103)', marginTop: '10px', width: '100%' }}
+                                                    variant="contained"
+                                                    size="small"
+                                                    onClick={handleClickOpen}>
+                                                    Buy
+                                                </Button>
+                                                <Dialog
+                                                    open={open}
+                                                    TransitionComponent={Transition}
+                                                    keepMounted
+                                                    onClose={handleClose}
+                                                    aria-describedby="alert-dialog-slide-description"
+                                                >
+                                                    <DialogTitle>{"Rate the Book Before Buying!"}</DialogTitle>
+                                                    <DialogContent>
+                                                        <DialogContentText id="alert-dialog-slide-description">
+                                                            We’d love to hear your thoughts!
+                                                            Please rate the following books on a scale of 1 to 5 stars
+                                                            (1 being the lowest and 5 being the highest).
+                                                            <br /><br />
+
+                                                            <Box sx={{ '& > legend': { mt: 2 } }}>
+                                                                <Rating
+                                                                    name="simple-controlled"
+                                                                    value={value}
+                                                                    onChange={(event, newValue) => {
+                                                                        setValue(newValue);
+                                                                    }}
+                                                                />
+
+                                                            </Box>
+
+                                                        </DialogContentText>
+                                                    </DialogContent>
+                                                    <DialogActions>
+                                                        <Button onClick={handleClose}>Don't Buy</Button>
+                                                        <Button onClick={handleClose}>Buy</Button>
+                                                    </DialogActions>
+                                                </Dialog>
+                                            </React.Fragment>
+
                                         </div>
                                     </Row>
                                 </Col>
@@ -112,10 +214,8 @@ console.log(BookID);
 
                                 </Col>
                             </Row>
-                            <h3></h3>
-                        </div>
+                            <br /><br />
 
-                        <div style={{ backgroundColor: "#fff", margin: '0% 8%', padding: '3%' }}>
                             <Row>
                                 <h5>You may be interested in</h5>
                                 <hr />
@@ -133,8 +233,8 @@ console.log(BookID);
                                     ))}
                                 </Box>
                             </Row>
-                            <h3></h3>
                         </div>
+
                     </>)}
 
             </div>
