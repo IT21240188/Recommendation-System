@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import NavBar from '../components/NavBar.jsx';
-import { Container, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import BookCard from '../components/BookCard.jsx';
-import { Box } from '@mui/material';
+import { Box,Button } from '@mui/material';
 
 const HomePage = () => {
 
@@ -48,23 +48,23 @@ const HomePage = () => {
         top: '68px',
         width: '100%',
         height: '500px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.55)',
       }}>
         <img
           src='/bookStore_home.jpg'
           width={'100%'}
           height='500px'
           style={{
-            filter: 'brightness(50%)',
+            filter: 'brightness(44%)',
             float: 'right',
             marginRight: '20px'
           }}
         />
       </div>
       <div style={{ position: 'relative', width: '100%', height: '350px', textAlign: 'center' }}>
-        <h1 style={{ color: 'white', marginTop:'10%' }}>Your Online Book Library</h1>
-        <Button variant="primary" style={{ marginTop: '20px' }} onClick={scrollToBooks}>
-          Explore Books
+        <h1 style={{ color: 'white', marginTop:'10%', fontFamily:'monospace' }}>Join Us in the World of Books!</h1>
+        <Button variant="outlined" style={{ marginTop: '20px',borderColor:'white', color:'white' }} onClick={scrollToBooks}>
+          Start Exploring
         </Button>
       </div>
 
