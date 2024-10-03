@@ -60,15 +60,12 @@ const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <div style={{ width: '16%', height: '76px' }}>
-            <Link to='/'>
+            <Link to="/">
               <img src="/bookStoreLogo.png" width="200px" height="100%" />
             </Link>
           </div>
 
-          <Box
-            sx={{ flexGrow: 0, display: { md: 'flex' } }}
-            margin={'auto'}
-          >
+          <Box sx={{ flexGrow: 0, display: { md: 'flex' } }} margin={'auto'}>
             <a
               href="/"
               style={{
@@ -93,14 +90,28 @@ const NavBar = () => {
                 For You
               </MenuItem>
             </a>
-
+            <a
+              href=""
+              style={{
+                textDecoration: 'none',
+                fontWeight: 'bolder',
+                fontSize: 'larger',
+              }}
+            >
+              <MenuItem style={{ margin: '0 5%', color: 'black' }}>
+                Others recommend
+              </MenuItem>
+            </a>
           </Box>
           {userInfoString ? (
             <>
-              <Box sx={{ flexGrow: 0, minWidth: "200px", textAlign: 'center' }}>
+              <Box sx={{ flexGrow: 0, minWidth: '200px', textAlign: 'center' }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src={storedUserInfo.user.profileImage} />
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={storedUserInfo.user.profileImage}
+                    />
                   </IconButton>
                 </Tooltip>
                 <Menu

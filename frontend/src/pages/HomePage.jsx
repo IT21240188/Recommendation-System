@@ -3,10 +3,9 @@ import axios from 'axios';
 import NavBar from '../components/NavBar.jsx';
 import { Container } from 'react-bootstrap';
 import BookCard from '../components/BookCard.jsx';
-import { Box,Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 const HomePage = () => {
-
   const userInfoString = localStorage.getItem('UserInfo');
   const storedUserInfo = JSON.parse(userInfoString);
 
@@ -19,8 +18,10 @@ const HomePage = () => {
   const fetchList = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/recommend/contentFirstUser/${storedUserInfo.user._id}`);
-      console.log(response);
+      const response = await axios.get(
+        `http://127.0.0.1:5000/recommend/contentFirstUser/${storedUserInfo.user._id}`
+      );
+      console.log('Response is', response);
       setBookList(response.data.recommended_books);
       setIsLoading(false);
     } catch (error) {
@@ -43,33 +44,53 @@ const HomePage = () => {
   return (
     <div>
       <NavBar />
-      <div style={{
-        position: 'absolute',
-        top: '68px',
-        width: '100%',
-        height: '500px',
-        backgroundColor: 'rgba(0, 0, 0, 0.55)',
-      }}>
+      <div
+        style={{
+          position: 'absolute',
+          top: '68px',
+          width: '100%',
+          height: '500px',
+          backgroundColor: 'rgba(0, 0, 0, 0.55)',
+        }}
+      >
         <img
-          src='/bookStore_home.jpg'
+          src="/bookStore_home.jpg"
           width={'100%'}
-          height='500px'
+          height="500px"
           style={{
             filter: 'brightness(44%)',
             float: 'right',
-            marginRight: '20px'
+            marginRight: '20px',
           }}
         />
       </div>
-      <div style={{ position: 'relative', width: '100%', height: '350px', textAlign: 'center' }}>
-        <h1 style={{ color: 'white', marginTop:'10%', fontFamily:'monospace' }}>Join Us in the World of Books!</h1>
-        <Button variant="outlined" style={{ marginTop: '20px',borderColor:'white', color:'white' }} onClick={scrollToBooks}>
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '350px',
+          textAlign: 'center',
+        }}
+      >
+        <h1
+          style={{ color: 'white', marginTop: '10%', fontFamily: 'monospace' }}
+        >
+          Join Us in the World of Books!
+        </h1>
+        <Button
+          variant="outlined"
+          style={{ marginTop: '20px', borderColor: 'white', color: 'white' }}
+          onClick={scrollToBooks}
+        >
           Start Exploring
         </Button>
       </div>
 
       {/* Book Section */}
-      <Container ref={bookSectionRef} style={{ paddingTop: '4%', position: 'relative' }}>
+      <Container
+        ref={bookSectionRef}
+        style={{ paddingTop: '4%', position: 'relative' }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -78,9 +99,8 @@ const HomePage = () => {
             gap: 2,
           }}
         >
-          {bookList.length > 0 && bookList.map((book, index) => (
-            <BookCard book={book} key={index} />
-          ))}
+          {bookList.length > 0 &&
+            bookList.map((book, index) => <BookCard book={book} key={index} />)}
         </Box>
       </Container>
     </div>
