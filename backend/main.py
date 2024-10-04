@@ -486,7 +486,7 @@ def evaluate_recommendations():
             return jsonify({"error": f"Invalid user ID format: {str(e)}"}), 400
 
         # Evaluate MAP for the list of users
-        map_score = evaluate_map_for_users(valid_user_ids, k=5)  # Use valid_user_ids here
+        map_score = evaluate_map_for_users(valid_user_ids, k=10)  # Use valid_user_ids here
 
         # Return the MAP evaluation result
         return jsonify({

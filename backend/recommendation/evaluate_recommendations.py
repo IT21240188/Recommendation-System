@@ -29,6 +29,8 @@ def get_relevant_books(user_id):
     
     user_preferences = mongo_db['User'].find_one({"_id": user_id}, {"preference1": 1, "preference2": 1})
     
+
+    
     if not user_preferences:
         print(f"No preferences found for user {user_id}")
         return set()  # Return an empty set of relevant books
@@ -70,6 +72,7 @@ def evaluate_content_based_recommendations(user_id, k):
     # Evaluation: Average Precision at K
     avg_precision = average_precision_at_k(recommended_books, relevant_books, k)
 
+    
     return avg_precision
 
 # Function to evaluate MAP for multiple users
@@ -82,6 +85,7 @@ def evaluate_map_for_users(user_ids, k):
         if isinstance(avg_precision, float):  # Only add valid average precision results
             total_avg_precisions.append(avg_precision)
 
+    print("total_avg_precisions",total_avg_precisions)
     if not total_avg_precisions:
         return 0.0
 
