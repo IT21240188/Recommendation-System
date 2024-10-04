@@ -5,6 +5,7 @@ from bson import ObjectId
 from recommendation.collaborative import get_collaborative_recommendations
 from recommendation.content_based import get_content_based_recommend
 from recommendation.hybrid_recommendation import get_hybrid_recommendations
+from recommendation.evaluate_recommendations import evaluate_map_for_users
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -467,6 +468,34 @@ def book_recommend_in_feed(user_id):
         # Log the error to the console and return a 400 error response
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 400
+    
+
+@app.route('/recommend/evaluate', methods=['POST'])
+def evaluate_recommendations():
+    try:
+        # Get the list of user IDs from the request body
+        user_ids = request.json.get("user_ids", [])
+        
+        if not user_ids or not isinstance(user_ids, list):
+            return jsonify({"error": "A list of valid user IDs must be provided."}), 400
+        
+        # Validate user IDs as ObjectId
+        try:
+            valid_user_ids = [ObjectId(user_id) for user_id in user_ids]
+        except Exception as e:
+            return jsonify({"error": f"Invalid user ID format: {str(e)}"}), 400
+
+        # Evaluate MAP for the list of users
+        map_score = evaluate_map_for_users(valid_user_ids, k=5)  # Use valid_user_ids here
+
+        # Return the MAP evaluation result
+        return jsonify({
+            "MAP_score": map_score,
+            "user_count": len(valid_user_ids)  # Use valid_user_ids for user count
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 

@@ -45,7 +45,7 @@ def get_hybrid_recommendations(user_id, collaborative_weight, content_weight):
 
     # Sort by weighted scores in descending order
     sorted_recommendations = sorted(hybrid_recommendations.items(), key=lambda x: x[1], reverse=True)
-    print("Helloo",sorted_recommendations)
+    
 
     # Get only the book IDs, sorted by combined score
     books_to_recommend = [book[0] for book in sorted_recommendations]

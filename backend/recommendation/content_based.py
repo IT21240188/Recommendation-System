@@ -67,6 +67,5 @@ def get_content_based_recommend(user_id):
     # Convert ObjectId fields to strings in recommended_books
     for book in recommended_books:
         book["_id"] = str(book["_id"])  # Convert the ObjectId to string
-        # If there are any other ObjectId fields, convert them as needed
-
+        
     return {"recommended_books": recommended_books}

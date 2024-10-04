@@ -34,6 +34,7 @@ def get_collaborative_recommendations(user_id):
     # Use user_id_obj to get recommendations
     distances, indices = knn_model.kneighbors(B.iloc[user_index].values.reshape(1, -1))
     similar_users = indices.flatten()[1:]
+    
 
     books_to_recommend = []
     for similar_user in similar_users:
