@@ -412,7 +412,8 @@ def book_recommend_in_feed(user_id):
         if len(interactions) > 0:
             # If user has interaction history, use hybrid approach
             recommendations = get_hybrid_recommendations(user_id,0.5,0.5)
-            return jsonify({"recommended_books": recommendations}), 200
+            return jsonify(recommendations), 200
+
         else:
             # If no interaction history, use content-based filtering
             books = list(Book.find({}))
