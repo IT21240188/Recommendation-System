@@ -4,6 +4,7 @@ from models import User, Book , UserHistory
 from bson import ObjectId
 from recommendation.collaborative import get_collaborative_recommendations
 from recommendation.content_based import get_content_based_recommend
+from recommendation.hybrid_recommendation import get_hybrid_recommendations
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -347,12 +348,18 @@ def delete_interaction(user_id, book_id):
 
 
 
-# Collaborative filtering route
 @app.route("/recommend/collaborative/<string:user_id>", methods=["GET"])
 def collaborative_recommend(user_id):
     try:
+        # Call the function and receive the response
         recommendations = get_collaborative_recommendations(user_id)
-        return jsonify({"recommended_books": recommendations}), 200
+        
+        # If the function returns a dict with an error, return that directly
+        if isinstance(recommendations, dict) and "error" in recommendations:
+            return jsonify(recommendations), 400
+        
+        # Return the recommendations as JSON
+        return jsonify(recommendations)  
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
@@ -360,8 +367,31 @@ def collaborative_recommend(user_id):
 @app.route("/recommend/content/<string:user_id>", methods=["GET"])
 def content_recommend(user_id):
     try:
+        # Call the function and receive the response
         recommendations = get_content_based_recommend(user_id)
-        return jsonify({"recommended_books": recommendations}), 200
+        
+        # If the function returns a dict with an error, return that directly
+        if isinstance(recommendations, dict) and "error" in recommendations:
+            return jsonify(recommendations), 400
+        
+        # Return the recommendations as JSON
+        return jsonify(recommendations)  
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    
+# Hybrid recommendation route
+@app.route("/recommend/hybrid/<string:user_id>", methods=["GET"])
+def hybrid_recommend(user_id):
+    try:
+        # Call the function and receive the response
+        recommendations = get_hybrid_recommendations(user_id,0.5,0.5)
+        
+        # If the function returns a dict with an error, return that directly
+        if isinstance(recommendations, dict) and "error" in recommendations:
+            return jsonify(recommendations), 400
+        
+        # Return the recommendations as JSON
+        return jsonify(recommendations)  
     except Exception as e:
         return jsonify({"error": str(e)}), 400
     
@@ -380,8 +410,8 @@ def book_recommend_in_feed(user_id):
         interactions = UserHistory.find({"userId": user_id})
 
         if len(interactions) > 0:
-            # If user has interaction history, use collaborative filtering
-            recommendations = get_collaborative_recommendations(user_id)
+            # If user has interaction history, use hybrid approach
+            recommendations = get_hybrid_recommendations(user_id,0.5,0.5)
             return jsonify({"recommended_books": recommendations}), 200
         else:
             # If no interaction history, use content-based filtering
@@ -420,6 +450,7 @@ def book_recommend_in_feed(user_id):
 
             # Sort remaining books by similarity score in descending order
             recommended_books = book_df.sort_values(by='similarity_score', ascending=False)
+            print(recommended_books)
 
             # Convert ObjectId fields to strings before returning
             recommended_books['_id'] = recommended_books['_id'].apply(str)

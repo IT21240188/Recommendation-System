@@ -2,17 +2,16 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from config import mongo_db
 from bson import ObjectId
+from flask import jsonify
 
 def get_collaborative_recommendations(user_id):
     # Fetch user history from MongoDB
     user_history = list(mongo_db['UserHistory'].find({}, {"userId": 1, "bookId": 1, "rating": 1}))
     data = pd.DataFrame(user_history)
 
-
     # Convert ratings to binary and pivot the data
     data['binary_rating'] = data['rating'].apply(lambda x: 1 if x >= 3 else 0)
     B = data.pivot(index='userId', columns='bookId', values='binary_rating').fillna(0)
-
 
     # Ensure user_id is an ObjectId
     try:
@@ -42,8 +41,16 @@ def get_collaborative_recommendations(user_id):
         unread_books = user_books[user_books > 0]
         books_to_recommend.extend(unread_books.index.tolist())
 
-
     # Convert ObjectId to string if necessary
     books_to_recommend = [str(book_id) for book_id in books_to_recommend]
+    
 
-    return list(set(books_to_recommend))
+    # Fetch detailed book information from MongoDB
+    recommended_books = list(mongo_db['Book'].find({"_id": {"$in": [ObjectId(book_id) for book_id in books_to_recommend]}}))
+
+    # Convert ObjectId fields to strings in recommended_books
+    for book in recommended_books:
+        book["_id"] = str(book["_id"])  # Convert the ObjectId to string
+        # If there are any other ObjectId fields, convert them as needed
+
+    return {"recommended_books": recommended_books}
