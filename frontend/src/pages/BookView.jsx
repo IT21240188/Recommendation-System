@@ -29,8 +29,10 @@ const BookView = () => {
     const userInfoString = localStorage.getItem('UserInfo');
     const storedUserInfo = JSON.parse(userInfoString);
 
-    const BookID = useParams('id');
-    console.log(BookID);
+    const userId = storedUserInfo.user._id;    
+
+    const bookId = useParams('id');
+    console.log(bookId);
 
     //states for the form fields
     const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +43,7 @@ const BookView = () => {
     const [open, setOpen] = React.useState(false);
 
     //ratings
-    const [value, setValue] = React.useState(2);
+    const [value, setValue] = React.useState();
 
 
 
@@ -66,17 +68,21 @@ const BookView = () => {
             try {
 
                 const rating = {
-                    value,
+                    userId,
+                    bookId: bookId.id,
+                    rating : value,
+                    hasRead : "true",
                 };
 
-                const response = await axios.post('http://127.0.0.1:5000/create_book', book);
+                const response = await axios.post('http://127.0.0.1:5000/create_interaction', rating);
 
-                console.log("Book Added successfully!", response);
-                toast.success("Book Added successfully!");
+                console.log("Rating Added successfully!", response);
+                toast.success("Book Added to the cart Succesffully!");
                 navigate('/');
+                
             } catch (error) {
                 console.error("Error:", error);
-                toast.error("Error adding the book. Please try again.");
+                toast.error("Error adding the ratings. Please try again.");
                 setIsLoading(false);
             }
         }
@@ -86,7 +92,7 @@ const BookView = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/books/${BookID.id}`);
+            const response = await axios.get(`http://127.0.0.1:5000/books/${bookId.id}`);
             setBook(response.data);
             setIsLoading(false);
 
@@ -113,7 +119,7 @@ const BookView = () => {
         window.scrollTo(0, 0);
         fetchData();
         fetchList();
-    }, [BookID])
+    }, [bookId])
 
 
     return (
@@ -127,7 +133,11 @@ const BookView = () => {
                     </div>
                 </>) : (
                     <>
-                        <div style={{ backgroundColor: "#fff", margin: '0% 8%', padding: '3%' }}>
+                        <div style={{ backgroundColor: "rgb(255, 255, 255)", 
+                            margin: '0% 8%', 
+                            padding: '3%', 
+                            boxShadow: '0px 0px 10px #d8d8d8',
+                            borderRadius: '10px' }}>
                             <Row>
                                 <Col md={4}>
                                     <Row>
@@ -183,7 +193,7 @@ const BookView = () => {
                                                     </DialogContent>
                                                     <DialogActions>
                                                         <Button onClick={handleClose}>Don't Buy</Button>
-                                                        <Button onClick={handleClose}>Buy</Button>
+                                                        <Button onClick={RatingsSubmitHandler}>Buy</Button>
                                                     </DialogActions>
                                                 </Dialog>
                                             </React.Fragment>

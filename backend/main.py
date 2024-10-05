@@ -288,10 +288,14 @@ def create_interaction():
         )
 
         if result.modified_count > 0:
-            interaction["_id"] = str(interaction["_id"])
-            interaction["userId"] = str(interaction["userId"])
-            interaction["bookId"] = str(interaction["bookId"])
-            return jsonify({"message": "Interaction updated.", "interaction": interaction}), 200
+            updated_interaction = UserHistory.find_one({"userId": user_id, "bookId": book_id})
+            updated_interaction["_id"] = str(updated_interaction["_id"])
+            updated_interaction["userId"] = str(updated_interaction["userId"])
+            updated_interaction["bookId"] = str(updated_interaction["bookId"])
+
+            return jsonify({"message": "Interaction updated.", "interaction": updated_interaction}), 200
+        else:
+            return jsonify({"message": "No changes made to the interaction."}), 200
     
     else:
         # Create new interaction
