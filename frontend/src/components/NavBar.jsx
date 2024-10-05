@@ -91,7 +91,7 @@ const NavBar = () => {
               </MenuItem>
             </a>
             <a
-              href=""
+              href="/booksOthersRecommend"
               style={{
                 textDecoration: 'none',
                 fontWeight: 'bolder',

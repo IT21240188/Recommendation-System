@@ -358,7 +358,7 @@ def collaborative_recommend(user_id):
     try:
         # Call the function and receive the response
         recommendations = get_collaborative_recommendations(user_id)
-        
+        recommendations.rename(columns={'_id': 'id'}, inplace=True)
         # If the function returns a dict with an error, return that directly
         if isinstance(recommendations, dict) and "error" in recommendations:
             return jsonify(recommendations), 400
@@ -390,7 +390,6 @@ def hybrid_recommend(user_id):
     try:
         # Call the function and receive the response
         recommendations = get_hybrid_recommendations(user_id,0.5,0.5)
-        
         # If the function returns a dict with an error, return that directly
         if isinstance(recommendations, dict) and "error" in recommendations:
             return jsonify(recommendations), 400

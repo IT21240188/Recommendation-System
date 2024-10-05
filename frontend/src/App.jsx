@@ -12,6 +12,7 @@ import BookCard from './components/BookCard';
 import BookView from './pages/BookView';
 import MyProfile from './pages/MyProfile';
 import BooksForYou from './components/BooksForYou';
+import OtherRecommendation from './pages/OtherRecommendation';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route path="/BookView/:id" element={<BookView />} />
               <Route path="/myprofile" element={<MyProfile />} />
               <Route path="/booksForYou" element={<BooksForYou />} />
+              <Route path="/booksOthersRecommend" element={<OtherRecommendation />} />
             </Route>
           </Routes>
         </Router>

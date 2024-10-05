@@ -21,7 +21,7 @@ def get_collaborative_recommendations(user_id):
 
     # Check if user_id exists in the DataFrame
     if user_id_obj not in B.index:
-        return {"error": f"User ID {user_id} not found in user history."}
+        return {"message": f"User ID {user_id} not found in user history."}
 
     # Get the index of the user_id
     user_index = list(B.index).index(user_id_obj)
