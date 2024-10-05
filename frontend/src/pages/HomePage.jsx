@@ -4,6 +4,7 @@ import NavBar from '../components/NavBar.jsx';
 import { Container } from 'react-bootstrap';
 import BookCard from '../components/BookCard.jsx';
 import { Box, Button } from '@mui/material';
+import FooterC from '../components/Footer.jsx';
 
 const HomePage = () => {
   const userInfoString = localStorage.getItem('UserInfo');
@@ -103,6 +104,7 @@ const HomePage = () => {
             bookList.map((book, index) => <BookCard book={book} key={index} />)}
         </Box>
       </Container>
+      <FooterC/>
     </div>
   );
 };

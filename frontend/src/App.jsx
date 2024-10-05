@@ -11,6 +11,7 @@ import UserLoginPage from './pages/UserLoginPage';
 import BookCard from './components/BookCard';
 import BookView from './pages/BookView';
 import MyProfile from './pages/MyProfile';
+import BooksForYou from './components/BooksForYou';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/AddBooks" element={<AddBooks />} />
               <Route path="/BookView/:id" element={<BookView />} />
               <Route path="/myprofile" element={<MyProfile />} />
+              <Route path="/booksForYou" element={<BooksForYou />} />
             </Route>
           </Routes>
         </Router>

@@ -79,7 +79,7 @@ const NavBar = () => {
               </MenuItem>
             </a>
             <a
-              href="/WorkoutPlans"
+              href="/booksForYou"
               style={{
                 textDecoration: 'none',
                 fontWeight: 'bolder',
