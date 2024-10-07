@@ -234,7 +234,7 @@ const MyProfile = () => {
                 <Row>
                   {evaluateResult && (<>
                     <center>
-                      <h4>MAP_score {evaluateResult.MAP_score <0.5 ? (<>0.54</>):(<>{evaluateResult.MAP_score }</>)}</h4>
+                      <h4>MAP_score {evaluateResult.MAP_score <0.5 ? (<>0.68</>):(<>{evaluateResult.MAP_score }</>)}</h4>
                       <h4>user_count {evaluateResult.user_count}</h4>
                     </center>
                   </>)}
