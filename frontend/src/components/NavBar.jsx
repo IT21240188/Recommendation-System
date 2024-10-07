@@ -78,30 +78,33 @@ const NavBar = () => {
                 Home
               </MenuItem>
             </a>
-            <a
-              href="/booksForYou"
-              style={{
-                textDecoration: 'none',
-                fontWeight: 'bolder',
-                fontSize: 'larger',
-              }}
-            >
-              <MenuItem style={{ margin: '0 5%', color: 'black' }}>
-                For You
-              </MenuItem>
-            </a>
-            <a
-              href="/booksOthersRecommend"
-              style={{
-                textDecoration: 'none',
-                fontWeight: 'bolder',
-                fontSize: 'larger',
-              }}
-            >
-              <MenuItem style={{ margin: '0 5%', color: 'black' }}>
-                Others recommend
-              </MenuItem>
-            </a>
+            {storedUserInfo.user.userType != 'Admin' && (<>
+              <a
+                href="/booksForYou"
+                style={{
+                  textDecoration: 'none',
+                  fontWeight: 'bolder',
+                  fontSize: 'larger',
+                }}
+              >
+                <MenuItem style={{ margin: '0 5%', color: 'black' }}>
+                  For You
+                </MenuItem>
+              </a>
+              <a
+                href="/booksOthersRecommend"
+                style={{
+                  textDecoration: 'none',
+                  fontWeight: 'bolder',
+                  fontSize: 'larger',
+                }}
+              >
+                <MenuItem style={{ margin: '0 5%', color: 'black' }}>
+                  Others recommend
+                </MenuItem>
+              </a>
+            </>)}
+
           </Box>
           {userInfoString ? (
             <>
@@ -135,7 +138,15 @@ const NavBar = () => {
                     style={{ textDecoration: 'none', color: 'black' }}
                   >
                     <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center"> Profile</Typography>
+                      <Typography textAlign="center"> Dashboard</Typography>
+                    </MenuItem>
+                  </a>
+                  <a
+                    href="/AddBooks"
+                    style={{ textDecoration: 'none', color: 'black' }}
+                  >
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center"> Add Book</Typography>
                     </MenuItem>
                   </a>
                   <MenuItem onClick={handleSignOut}>

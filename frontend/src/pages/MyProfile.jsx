@@ -30,7 +30,7 @@ const MyProfile = () => {
 
   const userInfoString = localStorage.getItem('UserInfo');
   const storedUserInfo = JSON.parse(userInfoString);
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState('3');
 
 
   const handleChange = (event, newValue) => {
@@ -41,6 +41,8 @@ const MyProfile = () => {
   const [users, setUsers] = useState([]);
   const [right, setRight] = useState([]);
   const [evaluateResult, setEvaluateResult] = useState({});
+  const [bookList, setBookList] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const usersChecked = intersection(checked, users);
@@ -165,14 +167,16 @@ const MyProfile = () => {
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList onChange={handleChange} aria-label="lab API tabs example">
-                <Tab label="Profile" value="1" />
-                <Tab label="My Books" value="2" />
+                
+                {storedUserInfo?.user.userType != "Admin" && (<Tab label="Profile" value="1" />)}
+
+                {storedUserInfo?.user.userType != "Admin" && (<Tab label="My Books" value="2" />)}
                 {storedUserInfo?.user.userType == "Admin" && (<Tab label="Evaluate" value="3" />)}
               </TabList>
             </Box>
             <TabPanel value="1">{storedUserInfo?.user.userType == "Admin" && (
               <>
-                <a href='AddBooks'><Button>Add Book</Button></a>
+                <a href='/AddBooks'><Button>Add Book</Button></a>
               </>)}
             </TabPanel>
             <TabPanel value="2">My Books</TabPanel>
