@@ -105,8 +105,10 @@ const BookView = () => {
     const fetchList = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get('http://127.0.0.1:5000/books');
-            setBookList(response.data.books);
+            const response = await axios.get(`http://127.0.0.1:5000/recommend/itemcontent/${bookId.id}`);
+            console.log(response.data);
+            
+            setBookList(response.data);
             setIsLoading(false);
 
         } catch (error) {
