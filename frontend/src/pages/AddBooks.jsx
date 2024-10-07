@@ -14,7 +14,6 @@ import dayjs from 'dayjs';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import InputAdornment from '@mui/material/InputAdornment';
 import Select from '@mui/material/Select';
 import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
 import { storage } from "../config/FireBaseConfig.js";
@@ -35,8 +34,6 @@ const AddBooks = () => {
     const [ISBN, setISBN] = useState('');
     const [genre, setGenre] = useState('');
     const [language, setLanguage] = useState('');
-    const [price, setPrice] = useState('');
-
 
     //states for image preview
     const [coverImage, setCoverImage] = useState(null);
@@ -96,7 +93,7 @@ const AddBooks = () => {
 
         const downUrl = await uploadCoverImage();
 
-        if (title === '' || author === '' || genre === '' || publishedDate === '' || ISBN === '' || language === '' || price=== ''|| description === '') {
+        if (title === '' || author === '' || genre === '' || publishedDate === '' || ISBN === '' || language === '' || description === '') {
             toast.error("Fill required fields");
 
         } else {
@@ -112,7 +109,6 @@ const AddBooks = () => {
                     publishedDate,
                     ISBN,
                     language,
-                    price,
                     description,
                     coverImage: downUrl,
                 };
@@ -184,7 +180,7 @@ const AddBooks = () => {
                                             variant="outlined"
                                             value={publishedDate}
                                             onChange={(newValue) => setPublishedDate(newValue)} />
-
+                                            
                                     </DemoContainer>
                                 </LocalizationProvider>
                             </Row>
@@ -272,27 +268,6 @@ const AddBooks = () => {
                                     </Select>
                                 </FormControl>
 
-
-                            </Row>
-
-                            <Row className={BooksTemplate.rows}>
-
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Price"
-                                    placeholder="100"
-                                    size='small'
-                                    variant="outlined"
-                                    type='number'
-                                    slotProps={{
-                                        input: {
-                                          startAdornment: <InputAdornment position="start">LKR </InputAdornment>,
-                                          inputProps: { min: 0, inputMode: 'numeric', pattern: '[0-9]*' }
-                                        },
-                                      }}
-                                    value={price}
-                                    onChange={(e) => setPrice(e.target.value)}
-                                />
 
                             </Row>
 
