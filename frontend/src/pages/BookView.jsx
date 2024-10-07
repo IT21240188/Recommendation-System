@@ -29,7 +29,7 @@ const BookView = () => {
     const userInfoString = localStorage.getItem('UserInfo');
     const storedUserInfo = JSON.parse(userInfoString);
 
-    const userId = storedUserInfo.user._id;    
+    const userId = storedUserInfo.user._id;
 
     const bookId = useParams('id');
     console.log(bookId);
@@ -70,8 +70,8 @@ const BookView = () => {
                 const rating = {
                     userId,
                     bookId: bookId.id,
-                    rating : value,
-                    hasRead : "true",
+                    rating: value,
+                    hasRead: "true",
                 };
 
                 const response = await axios.post('http://127.0.0.1:5000/create_interaction', rating);
@@ -79,7 +79,7 @@ const BookView = () => {
                 console.log("Rating Added successfully!", response);
                 toast.success("Book Added to the cart Succesffully!");
                 navigate('/');
-                
+
             } catch (error) {
                 console.error("Error:", error);
                 toast.error("Error adding the ratings. Please try again.");
@@ -105,8 +105,9 @@ const BookView = () => {
     const fetchList = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get('http://127.0.0.1:5000/books');
-            setBookList(response.data.books);
+            const response = await axios.get(`http://127.0.0.1:5000/recommend/content/${userId}`);
+
+            setBookList(response.data.recommended_books);
             setIsLoading(false);
 
         } catch (error) {
@@ -133,11 +134,13 @@ const BookView = () => {
                     </div>
                 </>) : (
                     <>
-                        <div style={{ backgroundColor: "rgb(255, 255, 255)", 
-                            margin: '0% 8%', 
-                            padding: '3%', 
+                        <div style={{
+                            backgroundColor: "rgb(255, 255, 255)",
+                            margin: '0% 8%',
+                            padding: '3%',
                             boxShadow: '0px 0px 10px #d8d8d8',
-                            borderRadius: '10px' }}>
+                            borderRadius: '10px'
+                        }}>
                             <Row>
                                 <Col md={4}>
                                     <Row>
@@ -238,9 +241,20 @@ const BookView = () => {
                                         gap: 2, // Gap between cards
                                     }}
                                 >
-                                    {bookList.length > 0 && bookList.map((book, index) => (
-                                        <BookCard book={book} key={index} />
-                                    ))}
+                                    {bookList && bookList.length > 0 ? (
+                                        <>
+                                            {bookList.map((book, index) => (
+                                                <BookCard book={book} key={index} />
+                                            ))}
+
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p>no books to retrieveed</p>
+                                        </>
+                                    )}
+
+
                                 </Box>
                             </Row>
                         </div>

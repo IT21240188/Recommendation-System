@@ -156,6 +156,7 @@ def create_book():
     author = request.json.get("author")
     ISBN = request.json.get("ISBN")
     genre = request.json.get("genre")
+    price  = request.json.get("price")
     language = request.json.get("language")
     published_date = request.json.get("publishedDate")
     cover_image = request.json.get("coverImage")
@@ -170,6 +171,7 @@ def create_book():
         "author": author,
         "ISBN": ISBN,
         "genre": genre,
+        "price": price,
         "language": language,
         "publishedDate": published_date,
         "coverImage": cover_image
@@ -182,6 +184,7 @@ def create_book():
         "author": new_book["author"],
         "ISBN": new_book["ISBN"],
         "genre": new_book["genre"],
+        "price": new_book["price"],
         "publishedDate": new_book["publishedDate"]
     }
 

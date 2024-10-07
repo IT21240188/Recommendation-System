@@ -100,7 +100,7 @@ const HomePage = () => {
             gap: 2,
           }}
         >
-          {bookList.length > 0 &&
+          {bookList && bookList.length > 0 &&
             bookList.map((book, index) => <BookCard book={book} key={index} />)}
         </Box>
       </Container>
