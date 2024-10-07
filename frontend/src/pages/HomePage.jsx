@@ -61,7 +61,6 @@ const HomePage = () => {
           style={{
             filter: 'brightness(44%)',
             float: 'right',
-            marginRight: '20px',
           }}
         />
       </div>

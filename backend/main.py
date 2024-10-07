@@ -10,13 +10,20 @@ from recommendation.Item_based import get_similar_books
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import json
 
 
 # User Routes
 @app.route("/users", methods=["GET"])
 def get_users():
     # Fetch all users from the MongoDB collection
-    users = list(User.find({"_id": 0}))  # Exclude MongoDB's _id field from the result
+    users = list(User.find({}))  
+
+     # Rename _id to id in the result
+    for user in users:
+        user['id'] = str(user['_id'])  # Convert ObjectId to string
+        user.pop('_id')  # Remove the original _id field
+        
     return jsonify({"users": users}), 200
 
 
@@ -479,11 +486,13 @@ def book_recommend_in_feed(user_id):
             recommended_books['_id'] = recommended_books['_id'].apply(str)
             recommended_books.rename(columns={'_id': 'id'}, inplace=True)
 
-            # Convert the DataFrame to a dictionary
-            recommended_books_dict = recommended_books.to_dict(orient='records')
-            print(recommended_books_dict)
+            # Convert DataFrame to JSON string with 'records' orientation
+            recommended_books_json = recommended_books.to_json(orient='records')
 
-            return jsonify({"recommended_books": recommended_books_dict}), 200
+            # Parse the JSON string to a Python list
+            recommended_books_list = json.loads(recommended_books_json)
+
+            return jsonify({"recommended_books": recommended_books_list}), 200
 
     except Exception as e:
         # Log the error to the console and return a 400 error response
@@ -496,7 +505,7 @@ def evaluate_recommendations():
     try:
         # Get the list of user IDs from the request body
         user_ids = request.json.get("user_ids", [])
-        
+        print(user_ids)
         if not user_ids or not isinstance(user_ids, list):
             return jsonify({"error": "A list of valid user IDs must be provided."}), 400
         

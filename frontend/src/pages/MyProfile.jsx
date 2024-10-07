@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import axios from 'axios';
 import NavBar from '../components/NavBar'
-import { Container } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap'
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -29,19 +30,66 @@ const MyProfile = () => {
 
   const userInfoString = localStorage.getItem('UserInfo');
   const storedUserInfo = JSON.parse(userInfoString);
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = useState('1');
 
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([0, 1, 2, 3]);
-  const [right, setRight] = React.useState([4, 5, 6, 7]);
+  const [checked, setChecked] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [right, setRight] = useState([]);
+  const [evaluateResult, setEvaluateResult] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  const leftChecked = intersection(checked, left);
+  const usersChecked = intersection(checked, users);
   const rightChecked = intersection(checked, right);
+
+  const fetchUsers = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:5000/users`
+      );
+      console.log('Response is', response);
+      setUsers(response.data.users);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setIsLoading(false);
+    }
+  }
+
+  const evaluate = async () => {
+    setIsLoading(true);
+    try {
+      let user_ids = [];
+
+      {
+        right.map((user, index) => {
+          console.log(user);
+          user_ids.push(user.id)
+        })
+      }
+
+      console.log(user_ids);
+
+      const response = await axios.post(
+        `http://127.0.0.1:5000/recommend/evaluate`, { user_ids: user_ids }
+      );
+      console.log('Response is', response);
+      setEvaluateResult(response.data)
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -57,36 +105,36 @@ const MyProfile = () => {
   };
 
   const handleAllRight = () => {
-    setRight(right.concat(left));
-    setLeft([]);
+    setRight(right.concat(users));
+    setUsers([]);
   };
 
   const handleCheckedRight = () => {
-    setRight(right.concat(leftChecked));
-    setLeft(not(left, leftChecked));
-    setChecked(not(checked, leftChecked));
+    setRight(right.concat(usersChecked));
+    setUsers(not(users, usersChecked));
+    setChecked(not(checked, usersChecked));
   };
 
-  const handleCheckedLeft = () => {
-    setLeft(left.concat(rightChecked));
+  const handleCheckedusers = () => {
+    setUsers(users.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
 
-  const handleAllLeft = () => {
-    setLeft(left.concat(right));
+  const handleAllusers = () => {
+    setUsers(users.concat(right));
     setRight([]);
   };
 
   const customList = (items) => (
     <Paper sx={{ width: 200, height: 230, overflow: 'auto' }}>
       <List dense component="div" role="list">
-        {items.map((value) => {
-          const labelId = `transfer-list-item-${value}-label`;
+        {items.map((value, index) => {
+          const labelId = `transfer-list-item-${value.firstName}-label`;
 
           return (
             <ListItemButton
-              key={value}
+              key={index}
               role="listitem"
               onClick={handleToggle(value)}
             >
@@ -100,13 +148,14 @@ const MyProfile = () => {
                   }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+              <ListItemText id={labelId} primary={`${value.firstName}`} />
             </ListItemButton>
           );
         })}
       </List>
     </Paper>
   );
+  console.log(right);
 
   return (
     <div>
@@ -129,7 +178,67 @@ const MyProfile = () => {
             <TabPanel value="2">My Books</TabPanel>
             {storedUserInfo.user.userType == 'Admin' && (
               <TabPanel value="3">
-                Evaluate
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{ justifyContent: 'center', alignItems: 'center' }}
+                >
+                  <Grid item>{customList(users)}</Grid>
+                  <Grid item>
+                    <Grid container direction="column" sx={{ alignItems: 'center' }}>
+                      <Button
+                        sx={{ my: 0.5 }}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleAllRight}
+                        disabled={users.length === 0}
+                        aria-label="move all right"
+                      >
+                        ≫
+                      </Button>
+                      <Button
+                        sx={{ my: 0.5 }}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleCheckedRight}
+                        disabled={usersChecked.length === 0}
+                        aria-label="move selected right"
+                      >
+                        &gt;
+                      </Button>
+                      <Button
+                        sx={{ my: 0.5 }}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleCheckedusers}
+                        disabled={rightChecked.length === 0}
+                        aria-label="move selected users"
+                      >
+                        &lt;
+                      </Button>
+                      <Button
+                        sx={{ my: 0.5 }}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleAllusers}
+                        disabled={right.length === 0}
+                        aria-label="move all users"
+                      >
+                        ≪
+                      </Button>
+                    </Grid>
+                  </Grid>
+                  <Grid item>{customList(right)}</Grid>
+                </Grid>
+                <Button onClick={() => evaluate()}>Evaluate</Button>
+                <Row>
+                  {evaluateResult && (<>
+                    <center>
+                      <h4>MAP_score {evaluateResult.MAP_score}</h4>
+                      <h4>user_count {evaluateResult.user_count}</h4>
+                    </center>
+                  </>)}
+                </Row>
               </TabPanel>
             )}
           </TabContext>

@@ -8,11 +8,10 @@ import PublicRoutes from './components/PrivateRoutes/PublicRoutes';
 import UserPrivateRoute from './components/PrivateRoutes/UserPrivateRoute';
 import UserRegisterPage from './pages/UserRegisterPage';
 import UserLoginPage from './pages/UserLoginPage';
-import BookCard from './components/BookCard';
 import BookView from './pages/BookView';
 import MyProfile from './pages/MyProfile';
-import BooksForYou from './components/BooksForYou';
 import OtherRecommendation from './pages/OtherRecommendation';
+import ForYou from './pages/ForYou';
 
 function App() {
   return (
@@ -34,7 +33,7 @@ function App() {
               <Route path="/AddBooks" element={<AddBooks />} />
               <Route path="/BookView/:id" element={<BookView />} />
               <Route path="/myprofile" element={<MyProfile />} />
-              <Route path="/booksForYou" element={<BooksForYou />} />
+              <Route path="/booksForYou" element={<ForYou />} />
               <Route path="/booksOthersRecommend" element={<OtherRecommendation />} />
             </Route>
           </Routes>
