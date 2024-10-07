@@ -6,6 +6,7 @@ from recommendation.collaborative import get_collaborative_recommendations
 from recommendation.content_based import get_content_based_recommend
 from recommendation.hybrid_recommendation import get_hybrid_recommendations
 from recommendation.evaluate_recommendations import evaluate_map_for_users
+from recommendation.Item_based import get_similar_books
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -383,6 +384,23 @@ def content_recommend(user_id):
         return jsonify(recommendations)  
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+    
+# Content-based item filtering route
+@app.route("/recommend/itemcontent/<string:bookId>", methods=["GET"])
+def content_item_recommend(bookId):
+    try:
+        # Call the function and receive the response
+        recommendations = get_similar_books(bookId)
+        
+        # If the function returns a dict with an error, return that directly
+        if isinstance(recommendations, dict) and "error" in recommendations:
+            return jsonify(recommendations), 400
+        
+        # Return the recommendations as JSON
+        return jsonify(recommendations)  
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    
     
 # Hybrid recommendation route
 @app.route("/recommend/hybrid/<string:user_id>", methods=["GET"])
