@@ -3,10 +3,9 @@ from config import app
 from models import User, Book , UserHistory
 from bson import ObjectId
 from recommendation.collaborative import get_collaborative_recommendations
-from recommendation.content_based import get_content_based_recommend
+from recommendation.content_based import get_content_based_recommend ,get_similar_books
 from recommendation.hybrid_recommendation import get_hybrid_recommendations
 from recommendation.evaluate_recommendations import evaluate_map_for_users
-from recommendation.Item_based import get_similar_books
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
