@@ -97,13 +97,14 @@ class User:
 
 #Book Model
 class Book:
-    def __init__(self, title, description, author, ISBN, genre, language, published_date, cover_image):
+    def __init__(self, title, description, author, ISBN, genre, language, price, published_date, cover_image):
         self.title = title
         self.description = description
         self.author = author
         self.ISBN = ISBN
         self.genre = genre
         self.language = language
+        self.price = price
         self.published_date = published_date
         self.cover_image = cover_image
 
@@ -116,6 +117,7 @@ class Book:
             ISBN=data.get("ISBN"),
             genre=data.get("genre"),
             language=data.get("language"),
+            price = data.get("price"),
             published_date=data.get("publishedDate"),
             cover_image=data.get("coverImage")
         )
@@ -128,6 +130,7 @@ class Book:
             "ISBN": self.ISBN,
             "genre": self.genre,
             "language": self.language,
+            "price": self.price,
             "publishedDate": self.published_date,
             "coverImage": self.cover_image
         }
