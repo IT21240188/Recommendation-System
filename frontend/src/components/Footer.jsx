@@ -15,15 +15,7 @@ const FooterC = () => {
             <MDBContainer className='p-4 pb-0'>
                 <form action=''>
                     <MDBRow className='d-flex justify-content-center'>
-                        <MDBCol size='auto' className='mb-4 mb-md-0'>
-                            
-                        </MDBCol>
-
-                        <MDBCol size='auto' className='mb-4 mb-md-0'>
-                            <MDBBtn outline color='light'>
-                                Subscribe
-                            </MDBBtn>
-                        </MDBCol>
+                        
                     </MDBRow>
                 </form>
             </MDBContainer>
