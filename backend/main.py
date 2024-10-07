@@ -382,7 +382,6 @@ def content_recommend(user_id):
     try:
         # Call the function and receive the response
         recommendations = get_content_based_recommend(user_id)
-        
         # If the function returns a dict with an error, return that directly
         if isinstance(recommendations, dict) and "error" in recommendations:
             return jsonify(recommendations), 400
