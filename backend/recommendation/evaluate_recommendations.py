@@ -32,7 +32,6 @@ def get_relevant_books(user_id):
 
     
     if not user_preferences:
-        print(f"No preferences found for user {user_id}")
         return set()  # Return an empty set of relevant books
     
     preferences = [user_preferences.get('preference1'), user_preferences.get('preference2')]
