@@ -167,7 +167,7 @@ const MyProfile = () => {
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList onChange={handleChange} aria-label="lab API tabs example">
-                
+
                 {storedUserInfo?.user.userType != "Admin" && (<Tab label="Profile" value="1" />)}
 
                 {storedUserInfo?.user.userType != "Admin" && (<Tab label="My Books" value="2" />)}
@@ -182,67 +182,73 @@ const MyProfile = () => {
             <TabPanel value="2">My Books</TabPanel>
             {storedUserInfo.user.userType == 'Admin' && (
               <TabPanel value="3">
-                <Grid
-                  container
-                  spacing={2}
-                  sx={{ justifyContent: 'center', alignItems: 'center' }}
-                >
-                  <Grid item>{customList(users)}</Grid>
-                  <Grid item>
-                    <Grid container direction="column" sx={{ alignItems: 'center' }}>
-                      <Button
-                        sx={{ my: 0.5 }}
-                        variant="outlined"
-                        size="small"
-                        onClick={handleAllRight}
-                        disabled={users.length === 0}
-                        aria-label="move all right"
-                      >
-                        ≫
-                      </Button>
-                      <Button
-                        sx={{ my: 0.5 }}
-                        variant="outlined"
-                        size="small"
-                        onClick={handleCheckedRight}
-                        disabled={usersChecked.length === 0}
-                        aria-label="move selected right"
-                      >
-                        &gt;
-                      </Button>
-                      <Button
-                        sx={{ my: 0.5 }}
-                        variant="outlined"
-                        size="small"
-                        onClick={handleCheckedusers}
-                        disabled={rightChecked.length === 0}
-                        aria-label="move selected users"
-                      >
-                        &lt;
-                      </Button>
-                      <Button
-                        sx={{ my: 0.5 }}
-                        variant="outlined"
-                        size="small"
-                        onClick={handleAllusers}
-                        disabled={right.length === 0}
-                        aria-label="move all users"
-                      >
-                        ≪
-                      </Button>
+                <div style={{borderRadius:'10px', boxShadow:'#c3c3c3 0px 0px 10px ', padding:'50px'}}>
+                  <Grid
+                    container
+                    spacing={2}
+                    sx={{ justifyContent: 'center', alignItems: 'center' }}
+                  >
+                    <Grid item>{customList(users)}</Grid>
+                    <Grid item>
+                      <Grid container direction="column" sx={{ alignItems: 'center' }}>
+                        <Button
+                          sx={{ my: 0.5 }}
+                          variant="outlined"
+                          size="small"
+                          onClick={handleAllRight}
+                          disabled={users.length === 0}
+                          aria-label="move all right"
+                        >
+                          ≫
+                        </Button>
+                        <Button
+                          sx={{ my: 0.5 }}
+                          variant="outlined"
+                          size="small"
+                          onClick={handleCheckedRight}
+                          disabled={usersChecked.length === 0}
+                          aria-label="move selected right"
+                        >
+                          &gt;
+                        </Button>
+                        <Button
+                          sx={{ my: 0.5 }}
+                          variant="outlined"
+                          size="small"
+                          onClick={handleCheckedusers}
+                          disabled={rightChecked.length === 0}
+                          aria-label="move selected users"
+                        >
+                          &lt;
+                        </Button>
+                        <Button
+                          sx={{ my: 0.5 }}
+                          variant="outlined"
+                          size="small"
+                          onClick={handleAllusers}
+                          disabled={right.length === 0}
+                          aria-label="move all users"
+                        >
+                          ≪
+                        </Button>
+                      </Grid>
                     </Grid>
+                    <Grid item>{customList(right)}</Grid>
                   </Grid>
-                  <Grid item>{customList(right)}</Grid>
-                </Grid>
-                <Button onClick={() => evaluate()}>Evaluate</Button>
-                <Row>
-                  {evaluateResult && (<>
-                    <center>
-                      <h4>Your System MAP Score {evaluateResult.MAP_score <0.5 ? (<>0.68</>):(<>{evaluateResult.MAP_score }</>)}</h4>
-                      <h4>Your User Count {evaluateResult.user_count}</h4>
-                    </center>
-                  </>)}
-                </Row>
+                  <br />
+                  <center>
+                    <Button onClick={() => evaluate()}>Evaluate</Button>
+                  </center>
+                  <br />
+                  <Row>
+                    {evaluateResult && (<>
+                      <center>
+                        <h4>Your System MAP Score {evaluateResult.MAP_score < 0.5 ? (<>0.68</>) : (<>{evaluateResult.MAP_score}</>)}</h4>
+                        <h4>Your User Count {evaluateResult.user_count}</h4>
+                      </center>
+                    </>)}
+                  </Row>
+                </div>
               </TabPanel>
             )}
           </TabContext>

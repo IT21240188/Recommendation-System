@@ -34,7 +34,7 @@ const ForYou = () => {
     }, []);
 
     // Filter books based on the search query
-    const filteredBooks = bookList.filter((book) =>
+    const filteredBooks = bookList?.filter((book) =>
         book.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
